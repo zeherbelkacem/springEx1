@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.fms.springEx1.Entities.Article;
 import com.fms.springEx1.Entities.Category;
+import com.fms.springEx1.Entities.CategoryEnum;
 import com.fms.springEx1.Repository.ArticleRepository;
 import com.fms.springEx1.Repository.CategoryRepository;
 
@@ -35,21 +36,26 @@ public class SpringEx1Application implements CommandLineRunner{
 		/*
 		 * Save some categories
 		 */
-		categoryRepository.save(new Category("PC"));
-		categoryRepository.save(new Category("SMARTPHONE"));
-		categoryRepository.save(new Category("TABLET"));
-		categoryRepository.save(new Category("HARDWARE"));
+		Category pc = new Category(CategoryEnum.PC);
+		Category smartphone = new Category(CategoryEnum.SMARTPHONE);
+		Category tablet = new Category(CategoryEnum.TABLET);
+		Category hardware = new Category(CategoryEnum.HARDWARE);
+		categoryRepository.save(pc);
+		categoryRepository.save(smartphone);
+		categoryRepository.save(tablet);
+		categoryRepository.save(hardware);
 		
 		
 		/*
 		 * Save some Articles
 		 */
-		articleRepository.save(new Article(null, "S10", "Samsung", (double) 350));
-		articleRepository.save(new Article(null, "S7", "Samsung", 300.));
-		articleRepository.save(new Article(null, "MI10", "Xiomi", 250D));
-		articleRepository.save(new Article(null, "GalaxyTab", "Samsung", (double) 150));
-		articleRepository.save(new Article(null, "EliteBook 16G", "HP", (double) 1350));
-		articleRepository.save(new Article(null, "Ipad", "Apple", (double) 100));
+		articleRepository.save(new Article(null, "S10", "Samsung", (double) 350, smartphone));
+		articleRepository.save(new Article(null, "S7", "Samsung", 300., smartphone));
+		articleRepository.save(new Article(null, "MI10", "Xiomi", 250D, smartphone));
+		articleRepository.save(new Article(null, "GalaxyTab", "Samsung", (double) 150, tablet));
+		articleRepository.save(new Article(null, "EliteBook 16G", "HP", (double) 1350, pc));
+		articleRepository.save(new Article(null, "Ipad", "Apple", (double) 100, tablet));
+		articleRepository.save(new Article(null, "Chargeur PC", "hp", (double) 80, hardware));
 		
 		/*
 		 * Some requests TEST
@@ -82,6 +88,11 @@ public class SpringEx1Application implements CommandLineRunner{
 		
 		System.out.println("------------------Read Article with HQL -------------------");
 		articleRepository.findByBrandAndPriceMin("Samsung", 300D).forEach(a->{
+			System.out.println(a);
+		});
+		
+		System.out.println("----------------article by category id----------------------");
+		articleRepository.findByCategoryId((long) 2).forEach(a->{
 			System.out.println(a);
 		});
 	}

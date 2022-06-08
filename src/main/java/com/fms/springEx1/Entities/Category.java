@@ -1,12 +1,16 @@
 package com.fms.springEx1.Entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  * 
@@ -27,17 +31,18 @@ public class Category implements Serializable{
 	/*
 	 * Category name using String
 	 */
-	@Column(name = "NAME")
-	private String name;
+//	@Column(name = "NAME")
+//	private String name;
 	
 	/*
 	 * Category name using Enum
 	 */
-//	@Column(name = "CAT_NAME")
-//	private CategoryEnum catName;
+	@Column(name = "CAT_NAME")
+	 @Enumerated(EnumType.STRING)
+	private CategoryEnum catName;
 	
-//	@OneToMany(mappedBy = "category")
-//	private Collection<Article> articles;
+	@OneToMany(mappedBy = "category")
+	private Collection<Article> articles;
 
 	/**
 	 * 
@@ -49,8 +54,8 @@ public class Category implements Serializable{
 	 * 
 	 * @param name
 	 */
-	public Category(String name) {
-		this.name = name;
+	public Category(CategoryEnum name) {
+		this.catName = name;
 	}
 
 	/**
@@ -58,9 +63,9 @@ public class Category implements Serializable{
 	 * @param id
 	 * @param name
 	 */
-	public Category(Long id, String name) {
+	public Category(Long id, CategoryEnum name) {
 		this.id = id;
-		this.name = name;
+		this.catName = name;
 	}
 	
 	/**
@@ -83,16 +88,16 @@ public class Category implements Serializable{
 	 * 
 	 * @return
 	 */
-	public String getName() {
-		return name;
+	public CategoryEnum getName() {
+		return catName;
 	}
 
 	/**
 	 * 
 	 * @param name
 	 */
-	public void setName(String name) {
-		this.name = name;
+	public void setName(CategoryEnum name) {
+		this.catName = name;
 	}
 	
 	/**
@@ -108,7 +113,7 @@ public class Category implements Serializable{
 	 */
 	@Override
 	public String toString() {
-		return "Category [id=" + id + ", name=" + name + "]";
+		return "Category [id=" + id + ", name=" + catName + "]";
 	}	
 	
 
