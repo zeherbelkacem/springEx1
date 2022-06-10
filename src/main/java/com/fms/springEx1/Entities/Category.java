@@ -1,12 +1,16 @@
 package com.fms.springEx1.Entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  * 
@@ -27,17 +31,18 @@ public class Category implements Serializable{
 	/*
 	 * Category name using String
 	 */
-	@Column(name = "NAME")
-	private String name;
+//	@Column(name = "NAME")
+//	private String name;
 	
 	/*
 	 * Category name using Enum
 	 */
-//	@Column(name = "CAT_NAME")
-//	private CategoryEnum catName;
+	@Column(name = "CAT_NAME")
+	@Enumerated(EnumType.STRING)
+	private CategoryEnum name;
 	
-//	@OneToMany(mappedBy = "category")
-//	private Collection<Article> articles;
+	@OneToMany(mappedBy = "category")
+	private Collection<Article> articles;
 
 	/**
 	 * 
@@ -49,7 +54,7 @@ public class Category implements Serializable{
 	 * 
 	 * @param name
 	 */
-	public Category(String name) {
+	public Category(CategoryEnum name) {
 		this.name = name;
 	}
 
@@ -58,7 +63,7 @@ public class Category implements Serializable{
 	 * @param id
 	 * @param name
 	 */
-	public Category(Long id, String name) {
+	public Category(Long id, CategoryEnum name) {
 		this.id = id;
 		this.name = name;
 	}
@@ -83,7 +88,7 @@ public class Category implements Serializable{
 	 * 
 	 * @return
 	 */
-	public String getName() {
+	public CategoryEnum getName() {
 		return name;
 	}
 
@@ -91,7 +96,7 @@ public class Category implements Serializable{
 	 * 
 	 * @param name
 	 */
-	public void setName(String name) {
+	public void setName(CategoryEnum name) {
 		this.name = name;
 	}
 	

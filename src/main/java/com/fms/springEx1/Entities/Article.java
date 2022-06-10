@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  * 
@@ -34,16 +36,16 @@ public class Article implements Serializable {
 	@Column(name = "PRICE")
 	private Double price;
 
-//	@ManyToOne
-//	@JoinColumn(name = "CATEGORY_ID")//It will have the same name by default
-//	private Category category;
+	@ManyToOne
+	@JoinColumn(name = "CATEGORY_ID")//It will have the same name by default
+	private Category category;
 
 	/**
 	 * 
 	 */
 	@Override
 	public String toString() {
-		return "Article [id=" + id + ", description=" + description + ", brand=" + brand + ", price=" + price + "]";
+		return "Article [id=" + id + ", description=" + description + ", brand=" + brand + ", price=" + price +", category=" + category.getName() + "]";
 	}
 
 	/**
@@ -51,6 +53,23 @@ public class Article implements Serializable {
 	 */
 	public Article() {
 		super();
+	}
+
+	/**
+	 * 
+	 * @param id
+	 * @param description
+	 * @param brand
+	 * @param price
+	 * @param category
+	 */
+	public Article(Long id, String description, String brand, Double price, Category category) {
+		super();
+		this.id = id;
+		this.description = description;
+		this.brand = brand;
+		this.price = price;
+		this.category = category;
 	}
 
 	/**
@@ -130,6 +149,16 @@ public class Article implements Serializable {
 	 */
 	public void setPrice(Double price) {
 		this.price = price;
+	}
+	
+	
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 	/**
