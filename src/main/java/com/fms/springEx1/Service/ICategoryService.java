@@ -33,6 +33,17 @@ public interface ICategoryService {
 	 */
 	public Category getCategoryById(Long idCat);
 
-	public Category getCategoryByName(CategoryEnum catName);
+	/**
+	 * 
+	 * @param catName
+	 * @return
+	 */
+	public Category getCategoryByName(String catName);
+	
+	/**
+	 * 
+	 * @param id
+	 */
+	public void deleteCategory(long id);
 	
 }

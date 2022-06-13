@@ -1,6 +1,8 @@
 package com.fms.springEx1;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.fms.springEx1.Entities.Article;
 import com.fms.springEx1.Entities.Category;
-import com.fms.springEx1.Entities.CategoryEnum;
+import com.fms.springEx1.Repository.ArticleRepository;
+import com.fms.springEx1.Repository.CategoryRepository;
+import com.fms.springEx1.Security.Role;
+import com.fms.springEx1.Security.RoleEnum;
+import com.fms.springEx1.Security.RoleService;
+import com.fms.springEx1.Security.User;
+import com.fms.springEx1.Security.UserService;
 import com.fms.springEx1.Service.IArticleService;
 import com.fms.springEx1.Service.ICategoryService;
 
@@ -22,6 +30,10 @@ public class SpringEx1Application implements CommandLineRunner {
 	 */
 	private static Scanner scanner = new Scanner(System.in);
 
+	private String login = null;
+	
+	private long idUser = 0;
+	
 	/*
 	 * Repositories Dependency Injections
 	 */
@@ -29,6 +41,10 @@ public class SpringEx1Application implements CommandLineRunner {
 	private IArticleService articleService;
 	@Autowired
 	private ICategoryService categoryService;
+	@Autowired
+	private UserService userService;
+
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringEx1Application.class, args);
@@ -36,54 +52,72 @@ public class SpringEx1Application implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-
+		/*
+		 * 
+		 */
+		/*
+		 * Role adminRole = new Role(0, RoleEnum.ADMIN); Role userRole = new Role(0,
+		 * RoleEnum.USER); List<Role> adminRoles = new ArrayList<Role>(); List<Role>
+		 * userRoles = new ArrayList<Role>();; adminRoles.add(adminRole);
+		 * adminRoles.add(userRole); userRoles.add(userRole); roleService.saveRole(new
+		 * Role(0, RoleEnum.ADMIN)); roleService.saveRole(new Role(0, RoleEnum.USER));
+		 * userService.saveUser(new User(0, "belka@fms.com", "1234", true, null));
+		 * userService.saveUser(new User(0, "ilyas@fms.com", "1234", true, null));
+		 */
+//		
+		//System.out.println(userService.readById(1).getRoles().get(0).getRole());
+		//System.out.println(userService.findUserByEmailAndPassword("ilyas@fms.com", "1234").getRoles());
+		
 		/*
 		 * Save some categories
 		 */
+		
 		/*
-		 * Category pc = new Category(CategoryEnum.PC); Category smartphone = new
-		 * Category(CategoryEnum.SMARTPHONE); Category tablet = new
-		 * Category(CategoryEnum.TABLET); Category hardware = new
-		 * Category(CategoryEnum.HARDWARE); Category other = new
-		 * Category(CategoryEnum.OTHER); categoryRepository.save(pc);
-		 * categoryRepository.save(smartphone); categoryRepository.save(tablet);
-		 * categoryRepository.save(hardware); categoryRepository.save(other);
+		 * Category pc = new Category("PC"); Category smartphone = new
+		 * Category("SMARTPHONE"); Category tablet = new Category("TABLET"); Category
+		 * hardware = new Category("HARDWARE"); Category other = new Category("OTHER");
+		 * categoryService.saveCategory(pc); categoryService.saveCategory(smartphone);
+		 * categoryService.saveCategory(tablet); categoryService.saveCategory(hardware);
+		 * categoryService.saveCategory(other);
 		 */
+		 
 
 		/*
 		 * Save some Articles
 		 */
-		/*
-		 * articleRepository.save(new Article(null, "S10", "Samsung", (double) 350,
-		 * smartphone)); articleRepository.save(new Article(null, "S7", "Samsung", 300.,
-		 * smartphone)); articleRepository.save(new Article(null, "MI10", "Xiomi", 250D,
-		 * smartphone)); articleRepository.save(new Article(null, "GalaxyTab",
-		 * "Samsung", (double) 150, tablet)); articleRepository.save(new Article(null,
-		 * "EliteBook 16G", "HP", (double) 1350, pc)); articleRepository.save(new
-		 * Article(null, "Ipad", "Apple", (double) 100, tablet));
-		 * articleRepository.save(new Article(null, "Chargeur PC", "hp", (double) 80,
-		 * hardware));
-		 * 
-		 * articleRepository.save(new Article(null, "S11", "Samsung", (double) 350,
-		 * smartphone)); articleRepository.save(new Article(null, "S12", "Samsung",
-		 * 300., smartphone)); articleRepository.save(new Article(null, "MI09", "Xiomi",
-		 * 250D, smartphone)); articleRepository.save(new Article(null, "tab enfant",
-		 * "Gulli", (double) 150, tablet)); articleRepository.save(new Article(null,
-		 * "EliteBook 16G", "HP", (double) 1350, pc)); articleRepository.save(new
-		 * Article(null, "Ipad", "Apple", (double) 150, tablet));
-		 * articleRepository.save(new Article(null, "casque ", "hp", (double) 80,
-		 * hardware)); articleRepository.save(new Article(null, "S11", "Samsung",
-		 * (double) 350, other)); articleRepository.save(new Article(null, "S12",
-		 * "Samsung", 300., other)); articleRepository.save(new Article(null, "MI09",
-		 * "Xiomi", 250D, other)); articleRepository.save(new Article(null,
-		 * "tab enfant", "Gulli", (double) 150, other)); articleRepository.save(new
-		 * Article(null, "EliteBook 16G", "HP", (double) 1350, other));
-		 * articleRepository.save(new Article(null, "Ipad", "Apple", (double) 100,
-		 * other)); articleRepository.save(new Article(null, "casque ", "hp", (double)
-		 * 80, other));
-		 */
 		
-		while (true) {			
+		/*
+		 * articleService.saveArticle(new Article(null, "S10", "Samsung", (double) 350,
+		 * smartphone)); articleService.saveArticle(new Article(null, "S7", "Samsung",
+		 * 300., smartphone)); articleService.saveArticle(new Article(null, "MI10",
+		 * "Xiomi", 250D, smartphone)); articleService.saveArticle(new Article(null,
+		 * "GalaxyTab", "Samsung", (double) 150, tablet));
+		 * articleService.saveArticle(new Article(null, "EliteBook 16G", "HP", (double)
+		 * 1350, pc)); articleService.saveArticle(new Article(null, "Ipad", "Apple",
+		 * (double) 100, tablet)); articleService.saveArticle(new Article(null,
+		 * "Chargeur PC", "hp", (double) 80, hardware));
+		 * 
+		 * articleService.saveArticle(new Article(null, "S11", "Samsung", (double) 350,
+		 * smartphone)); articleService.saveArticle(new Article(null, "S12", "Samsung",
+		 * 300., smartphone)); articleService.saveArticle(new Article(null, "MI09",
+		 * "Xiomi", 250D, smartphone)); articleService.saveArticle(new Article(null,
+		 * "tab enfant", "Gulli", (double) 150, tablet)); articleService.saveArticle(new
+		 * Article(null, "EliteBook 16G", "HP", (double) 1350, pc));
+		 * articleService.saveArticle(new Article(null, "Ipad", "Apple", (double) 150,
+		 * tablet)); articleService.saveArticle(new Article(null, "casque ", "hp",
+		 * (double) 80, hardware)); articleService.saveArticle(new Article(null, "S11",
+		 * "Samsung", (double) 350, other)); articleService.saveArticle(new
+		 * Article(null, "S12", "Samsung", 300., other)); articleService.saveArticle(new
+		 * Article(null, "MI09", "Xiomi", 250D, other)); articleService.saveArticle(new
+		 * Article(null, "tab enfant", "Gulli", (double) 150, other));
+		 * articleService.saveArticle(new Article(null, "EliteBook 16G", "HP", (double)
+		 * 1350, other)); articleService.saveArticle(new Article(null, "Ipad", "Apple",
+		 * (double) 100, other)); articleService.saveArticle(new Article(null,
+		 * "casque ", "hp", (double) 80, other));
+		 */
+		 
+
+		while (true) {
 			System.out.println("Bienvenue dans votre LIBRAIRIE. Voici la liste de nos livres ");
 			welcomeMenu();
 		}
@@ -151,6 +185,30 @@ public class SpringEx1Application implements CommandLineRunner {
 //		});
 	}
 
+	private void authentication() {
+		if(login != null)	System.out.println("vous êtes déjà connecté");
+		else {
+			System.out.println("saisissez votre email : ");
+			String email = scanner.next();
+			System.out.println("saisissez votre password : ");
+			String pwd = scanner.next();
+			
+			User user = userService.findUserByEmailAndPassword(email, pwd);
+			if (user != null) {
+				idUser = user.getUserId();
+				/*
+				 * Check user role
+				 */
+				for (int i = 0; i < user.getRoles().size(); i++) {
+					if (user.getRoles().get(i).getRole() == RoleEnum.ADMIN) 
+						adminMenu();
+					else usersMenu(idUser);
+				}
+			}
+			else System.out.println("login ou password incorrect");
+		}
+	}
+
 	/**
 	 * 
 	 */
@@ -161,18 +219,23 @@ public class SpringEx1Application implements CommandLineRunner {
 				System.out.println("\n----------------------------- SHOP APP -------------------------" + "\n"
 						+ "ADMIN                                                  enter (1)\n"
 						+ "USERS                                                  enter (2)\n"
+						+ "LOGIN                                                  enter (3)\n"
 						+ "----------------------------------------------------------------");
 
 				/** Only integer entries accepted */
 				menuChoice = (int) getPositiveIntegerInput(scanner, "\nFaite votre choix!");
 				switch (menuChoice) {
 				case 1:
-					adminMenu();
+					authentication();
+					//adminMenu();
 					break;
 
 				case 2:
-					usersMenu();
-
+					usersMenu(idUser);
+					break;
+					
+				case 3:
+					authentication();
 					break;
 
 				default:
@@ -184,9 +247,184 @@ public class SpringEx1Application implements CommandLineRunner {
 		}
 	}
 
-	private void usersMenu() {
-		// TODO Auto-generated method stub
+	private void usersMenu(long userId) {
+		int menuChoice = -1;
+		while (menuChoice != 0) { // (0) to exit menu
+			try {
+				System.out.println("-------------------------- STORE MENU --------------------------" + "\n"
+						+ "Pour afficher TOUS les ARTICLES,                       enter (1)\n"
+						+ "Pour afficher les articles PAR CATEGORIE,              enter (2)\n"
+						+ "Pour AJOUTER un article au PANIER,                     enter (3)\n"
+						+ "Pour SUPPRIMER un article dans le PANIER               enter (4)\n"
+						+ "Pour AFFICHER et VALIDER le PANIER,                    enter (5)\n"
+						+ "Pour recuperer la FACTURE-COMMANDE (admin),            enter (6)\n"
+						+ "SORTIR de l'application,                               enter (0)\n"
+						+ "----------------------------------------------------------------");
 
+				/** Only integer entries accepted */
+				menuChoice = (int) getPositiveIntegerInput(scanner, "\nFaite votre choix!");
+				switch (menuChoice) {
+				case 1:
+					showArticles(articleService.realAll());
+					break;
+
+				case 2:
+					showAllCategories(categoryService.readAllCategories());
+					Long idCategory =  getPositiveIntegerInput(scanner, "\nEntrez l'ID de la CATEGORY concernée!");
+					showArticles(articleService.readArticleByCatgoryId(idCategory));
+					break;
+
+				case 3:
+					showArticles(articleService.realAll());
+					Long idArticle = getPositiveIntegerInput(scanner,
+							"\nEntrez l'ID de l'article que vous souhaitez!");
+					articleService.addArticleToCart(idArticle);
+					break;
+
+				case 4:
+					showMyCart(articleService.getMyCart());
+					Long idArticle1 =  getPositiveIntegerInput(scanner,
+							"\nEntrez l'ID de l'article que vous souhaitez RETIRER!");
+					//shopJob.removeArticleFromBucket(idArticle1);
+					break;
+
+				case 5:
+					validateCart(articleService.getMyCart(), userId);
+					break;
+
+				case 6:
+					int orderId = (int) getPositiveIntegerInput(scanner, "\nEntrez l'ID de la commande concernée!");
+					//getInvoice(orderId);
+					break;
+
+				case 0:
+					menuChoice = 0;
+					break;
+
+				default:
+					System.out.println("Wrong entry: ONLY INTEGERS ENTRIES ( 0 to 5)");
+				}
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+
+	}
+	
+	/**
+	 * 
+	 * @param scanner2
+	 * @param string
+	 * @return
+	 */
+	private int getPositiveOneOrTwo(Scanner scanner2, String string) {
+		String menuresponse = "";
+		while (true) {
+			System.out.println(string);
+			try {
+				menuresponse = scanner.next();
+				if (Integer.parseInt(menuresponse) == 1 || Integer.parseInt(menuresponse) == 2)
+					break;
+				System.out.println("La réponse doit être numerique et positive entre 1 & 2");
+			} catch (NumberFormatException e) {
+				System.out.println("La réponse doit être numerique et positive entre 1 ou 2");
+			}
+		}
+		return Integer.parseInt(menuresponse);
+
+	}
+
+	private void validateCart(Map<Long, Article> myCart, long userId) {
+		/* Get an empty message where cart is empty */
+		if (myCart.isEmpty())
+			System.out.println("\nYour bucket si empty!\n");
+		else {
+			showMyCart(myCart);
+
+			/* Suggest to validate and confirm the buy */
+			int validate = getPositiveOneOrTwo(scanner, "Voulez-vous VALIDER votre panier:  ?(1:oui/ 2:non)");
+
+			if (validate == 1) {
+				int confirm = getPositiveOneOrTwo(scanner, "Voulez-vous CONFIRMER LA VALIDATION:  ?(1:oui/ 2:non)");
+
+				/* Save the order information in DB and finally delete cart */
+				if (confirm == 1) {
+					double totalprice = 0;
+
+					//int lastOrderId = shopJob.getLastOrderId(); // get the last order ID
+					/*
+					 * As we can't add or update a child (orderitem) row (foreign key constraint,
+					 * start by save a default parent row (order)
+					 */
+				//	shopJob.insertOrderLineToOrder(new Order(0, new Date(), totalprice, userId));
+
+					/* each line in the bucket corresponds to an item in the order table */
+					for (Map.Entry<Long, Article> entry : myCart.entrySet()) {
+						/* get the price for each item */
+					//	double itemPrice = entry.getValue().getPrice() * entry.getValue().getQuantity();
+						/* Start saving items */
+						//shopJob.insertOrderLine(new OrderLine(0, entry.getValue().getId(),
+							//	entry.getValue().getQuantity(), itemPrice, lastOrderId + 1, lastOrderId + 1));
+						/* Get the order total price */
+						//totalprice += itemPrice;
+					}
+
+					/*
+					 * Update the last default order saving after that all order items were saved
+					 * (and clear the bucket)
+					 */
+		//			shopJob.updateOrder(new Order(lastOrderId + 1, new Date(), totalprice, userId));
+					myCart.clear();
+
+					/**/
+					int getInvoice = getPositiveOneOrTwo(scanner,
+							"Voulez-vous récuperer votre facture:  ?(1:oui/ 2:non)");
+					if (getInvoice == 1)
+						//shopJob.generatetInvoice(lastOrderId + 1);
+					System.out.println("Merci et à bientôt.");
+				}
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * @param myCart
+	 */
+	private void showMyCart(Map<Long, Article> myCart) {
+		/* Table header */
+		System.out.println(
+				"\n----------------------------------------------------------------------------------------------------");
+		System.out.print(String.format("|%-5s|%-36s|%-18s|%-12s|%-10s|%-12s|", "ID", "DESCRIPTION", "BRAND",
+				"UNITY PRICE", "QUANTITY", "TOTAL PRICE"));
+		System.out.println(
+				"\n----------------------------------------------------------------------------------------------------");
+
+		/**
+		 * Total price for each selected training and total price for the whole bucket
+		 */
+		Double productTotalPrice = 0.0;
+		Double TotalPrice = 0.0;
+		/* Start to fill the table body with the selected training */
+		for (java.util.Map.Entry<Long, Article> entry : myCart.entrySet()) {
+			productTotalPrice = entry.getValue().getPrice() * entry.getValue().getQuantity();
+			System.out.println(String.format("|%-5s|%-36s|%-18s|%-12s|%-10s|%-12s|", entry.getKey(),
+					entry.getValue().getDescription(), entry.getValue().getBrand(), entry.getValue().getPrice(),
+					entry.getValue().getQuantity(), productTotalPrice + " €"));
+			System.out.println(
+					"----------------------------------------------------------------------------------------------------");
+			TotalPrice += productTotalPrice;
+		}
+
+		/*
+		 * The last table line: a small choice menu and the total bucket price in EURO
+		 */
+		System.out.println(String.format("\n|%-82s|%-15s|",
+				"Totals:       -> -> ->         -> -> ->         -> -> ->         -> -> ->     ", TotalPrice + " €"));
+		System.out.println(
+				"----------------------------------------------------------------------------------------------------\n");
+
+		
 	}
 
 	private void adminMenu() {
@@ -194,46 +432,59 @@ public class SpringEx1Application implements CommandLineRunner {
 		while (menuChoice != 0) { // (0) to exit menu
 			try {
 				System.out.println("\n------------------------ ADMIN CONSOLE -------------------------" + "\n"
-						+ "Pour afficher les ARTICLES,                             enter (1)\n"
-						+ "Pour afficher tous les article page par page,          enter (2)\n"
-						+ "Pour Afficher toutes les CATEGORIES                    enter (3)\n"
-						+ "Pour AJOUTER un ARTICLE,                               enter (4)\n"
-						+ "Pour SUPPRIMER un article         ,                    enter (5)\n"
-						+ "Pour METTRE A JOUR un ARTICLE,                         enter (6)\n"
-						+ "Tous les articles d’une catégorie                      enter (7)\n"
+						+ "*************************** CATEGORIES *************************\n"
+						+ "Pour Afficher toutes les CATEGORIES                    enter (1)\n"
+						+ "Ajouter une categorie                                  enter (2)\n"
+						+ "Supprimer une categorie                                enter (3)\n"
+						+ "\n************************* ARTICLES ****************************\n"
+						+ "Pour afficher les ARTICLES,                            enter (4)\n"
+						+ "Pour afficher tous les article page par page,          enter (5)\n"
+						+ "Tous les ARTICLES d’une CATEGORIE                      enter (6)\n"
+						+ "Pour AJOUTER un ARTICLE,                               enter (7)\n"
+						+ "Pour SUPPRIMER un article         ,                    enter (8)\n"
+						+ "Pour METTRE A JOUR un ARTICLE,                         enter (9)\n"
+						+ "\n"
 						+ "SORTIR de l'application,                               enter (0)\n"
 						+ "----------------------------------------------------------------");
 
 				/** Only integer entries accepted */
 				menuChoice = (int) getPositiveIntegerInput(scanner, "\nFaites votre choix!");
 				switch (menuChoice) {
+
 				case 1:
-					showArticles(articleService.realAll());
+					showAllCategories(categoryService.readAllCategories());
 					break;
 
 				case 2:
-					showArticlesPageByPage();
+					addCategory();
 					break;
-
+					
 				case 3:
-					showAllCategories(categoryService.readAllCategories());
-					;
+					deleteCategory();
 					break;
-
+					
 				case 4:
-					addArticle();
+					showArticles(articleService.realAll());
 					break;
 
 				case 5:
-					deleteArticle();
+					showArticlesPageByPage();
 					break;
 
 				case 6:
-					updateArticle();
+					articlesByCategoryId();
+					break;
+					
+				case 7:
+					addArticle();
 					break;
 
-				case 7:
-					articlesByCategoryId();
+				case 8:
+					deleteArticle();
+					break;
+
+				case 9:
+					updateArticle();
 					break;
 
 				case 0:
@@ -249,6 +500,21 @@ public class SpringEx1Application implements CommandLineRunner {
 		}
 	}
 
+	private void deleteCategory() {
+		showAllCategories(categoryService.readAllCategories());
+	int idCategory = (int) getPositiveIntegerInput(scanner, "\nEntrez l'ID de la categorie que vous souhaitez supprimer!");
+		categoryService.deleteCategory(idCategory);
+		
+	}
+
+	private void addCategory() {
+		System.out.println("Entrer le nom de la category :");
+		String category = scanner.nextLine();
+		category = scanner.nextLine();
+		categoryService.saveCategory(new Category(category));
+		
+	}
+
 	/**
 	 * 
 	 */
@@ -256,7 +522,7 @@ public class SpringEx1Application implements CommandLineRunner {
 		String description = null;
 		String brand = null;
 		Double price = null;
-		CategoryEnum catName = null;
+		String catName = null;
 		String answer = "";
 		Long idCat = null;
 		showArticles(articleService.realAll());
@@ -348,7 +614,7 @@ public class SpringEx1Application implements CommandLineRunner {
 		System.out.println("Description de l'article ?");
 		String description = scanner.nextLine();
 		description = scanner.nextLine();
-		
+
 		System.out.println("Marque de l'article ?");
 		String brand = scanner.next();
 		// brand = scanner.next();
@@ -378,7 +644,7 @@ public class SpringEx1Application implements CommandLineRunner {
 		/*
 		 * Number of pages
 		 */
-		int articleTotalPages = articleService.readArticlesPageByPage(page, size).getTotalPages();
+//		int articleTotalPages = articleService.readArticlesPageByPage(page, size).getTotalPages();
 
 		/*
 		 * Number of total elements
@@ -388,18 +654,77 @@ public class SpringEx1Application implements CommandLineRunner {
 		/*
 		 * Pagination show
 		 */
-		for (page = 0; page < articleTotalPages; page++) {
-			int pageNbElmts = articleService.readArticlesPageByPage(page, size).getNumberOfElements(); // number of
-																										// items on the
-																										// current page
-			// Elements Page
-			System.out.println("\nPage Number " + page + " contains " + pageNbElmts + " elements:");
-			showArticles(articleService.readArticlesPageByPage(page, size).getContent());
-//			articleService.readArticlesPageByPage(page, size).forEach(a -> {
-//				System.out.println(a);
-//			});
+		showArticles(articleService.readArticlesPageByPage(page, size).getContent());
+
+		int menuChoice = -1;
+		while (menuChoice != 0) {
+			try {
+				System.out.println("        (touche 1) <<<<<<<<<<<<<<<<  " + (page + 1) + "/" + size
+						+ "  >>>>>>>>>>>>>>>> (touche 2)" + "                SORTIR (touche 0) |"
+						+ "\n--------------------------------------------------------------------------------------------------------");
+
+				/** Only integer entries accepted */
+				menuChoice = (int) getPositiveIntegerInput(scanner, "");
+				System.out.print(" ");
+				/*
+				 * Element of current page
+				 */
+				int currentPageElts = articleService.readArticlesPageByPage(page, size).getNumberOfElements();
+				switch (menuChoice) {
+				case 1:
+					if (page > 0) {
+						clearPreviousPrintedPage(currentPageElts);
+						showArticles(articleService.readArticlesPageByPage(page - 1, size).getContent());
+						page--;
+					} else {
+						clearPreviousPrintedPage(currentPageElts);
+						showArticles(articleService.readArticlesPageByPage(page, size).getContent());
+					}
+					break;
+
+				case 2:
+					if (page < size-1) {
+						clearPreviousPrintedPage(currentPageElts);
+						showArticles(articleService.readArticlesPageByPage(page + 1, size).getContent());
+						page++;
+					} else {
+						clearPreviousPrintedPage(currentPageElts);
+						showArticles(articleService.readArticlesPageByPage(page, size).getContent());
+
+					}
+					break;
+
+				case 0:
+					menuChoice = 0;
+					break;
+
+				default:
+					System.out.println("Wrong entry: ONLY INTEGERS ENTRIES ( 0 to 5)");
+				}
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+
 		}
 
+//		for (page = 0; page < articleTotalPages; page++) {
+//			int pageNbElmts = articleService.readArticlesPageByPage(page, size).getNumberOfElements(); // number of
+//																										// items on the
+//																										// current page
+//			// Elements Page
+//			System.out.println("\nPage Number " + page + " contains " + pageNbElmts + " elements:");
+//			showArticles(articleService.readArticlesPageByPage(page, size).getContent());
+////			articleService.readArticlesPageByPage(page, size).forEach(a -> {
+////				System.out.println(a);
+////			});
+//		}
+
+	}
+
+	private void clearPreviousPrintedPage(int currentPageElts) {
+		for (int i = 0; i < (currentPageElts * 2) + 2; i++) 
+			System.out.print(
+					"\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
 	}
 
 	/**
@@ -412,7 +737,7 @@ public class SpringEx1Application implements CommandLineRunner {
 	private static long getPositiveIntegerInput(Scanner scanner, String string) {
 		String menuresponse = "";
 		while (true) {
-			System.out.println(string);
+			System.out.print(string);
 			try {
 				menuresponse = scanner.next();
 				if (Integer.parseInt(menuresponse) >= 0)

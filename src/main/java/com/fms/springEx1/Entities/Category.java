@@ -3,6 +3,7 @@ package com.fms.springEx1.Entities;
 import java.io.Serializable;
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -38,10 +39,11 @@ public class Category implements Serializable{
 	 * Category name using Enum
 	 */
 	@Column(name = "CAT_NAME")
-	@Enumerated(EnumType.STRING)
-	private CategoryEnum name;
+//	@Enumerated(EnumType.STRING)
+//	private CategoryEnum name;
+	private String name;
 	
-	@OneToMany(mappedBy = "category")
+	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
 	private Collection<Article> articles;
 
 	/**
@@ -54,7 +56,7 @@ public class Category implements Serializable{
 	 * 
 	 * @param name
 	 */
-	public Category(CategoryEnum name) {
+	public Category(String name) {
 		this.name = name;
 	}
 
@@ -63,7 +65,7 @@ public class Category implements Serializable{
 	 * @param id
 	 * @param name
 	 */
-	public Category(Long id, CategoryEnum name) {
+	public Category(Long id, String name) {
 		this.id = id;
 		this.name = name;
 	}
@@ -88,7 +90,7 @@ public class Category implements Serializable{
 	 * 
 	 * @return
 	 */
-	public CategoryEnum getName() {
+	public String getName() {
 		return name;
 	}
 
@@ -96,7 +98,7 @@ public class Category implements Serializable{
 	 * 
 	 * @param name
 	 */
-	public void setName(CategoryEnum name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 	

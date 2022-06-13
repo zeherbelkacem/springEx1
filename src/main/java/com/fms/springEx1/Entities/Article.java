@@ -9,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 /**
  * 
@@ -35,7 +38,10 @@ public class Article implements Serializable {
 
 	@Column(name = "PRICE")
 	private Double price;
-
+	
+	@Column(name = "QUANTITY")
+	private int quantity = 1;
+	
 	@ManyToOne
 	@JoinColumn(name = "CATEGORY_ID")//It will have the same name by default
 	private Category category;
@@ -46,6 +52,14 @@ public class Article implements Serializable {
 	@Override
 	public String toString() {
 		return "Article [id=" + id + ", description=" + description + ", brand=" + brand + ", price=" + price +", category=" + category.getName() + "]";
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
 	/**

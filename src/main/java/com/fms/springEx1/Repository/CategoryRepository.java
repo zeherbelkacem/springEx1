@@ -8,6 +8,6 @@ import com.fms.springEx1.Entities.CategoryEnum;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
-	public Category findByName(CategoryEnum name);
+	public Category findByName(String name);
 	
 }

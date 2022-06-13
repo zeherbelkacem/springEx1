@@ -36,8 +36,14 @@ public class CategoryServiceImp implements ICategoryService{
 	}
 
 	@Override
-	public Category getCategoryByName(CategoryEnum catName) {
+	public Category getCategoryByName(String catName) {
 		return categoryRepository.findByName(catName);
+	}
+
+	@Override
+	public void deleteCategory(long id) {
+		categoryRepository.deleteById(id);
+		
 	}
 
 }

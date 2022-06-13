@@ -1,6 +1,7 @@
 package com.fms.springEx1.Service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -78,5 +79,13 @@ public interface IArticleService {
 	 * @return
 	 */
 	public Page<Article> findByPageByPageAndKeyWord(String keyWord, Pageable pageable);
+
+	/**
+	 * 
+	 * @param idArticle
+	 */
+	public void addArticleToCart(Long idArticle);
+
+	public Map<Long, Article> getMyCart();
 	
 }

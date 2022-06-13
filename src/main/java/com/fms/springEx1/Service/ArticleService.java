@@ -1,6 +1,8 @@
 package com.fms.springEx1.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import com.fms.springEx1.Repository.ArticleRepository;
 @Service
 public class ArticleService implements IArticleService{
 
+	private Map<Long, Article> cartMap = new HashMap<Long, Article>();
 	/*
 	 * Repositories Dependency Injections
 	 */
@@ -95,6 +98,29 @@ public class ArticleService implements IArticleService{
 	@Override
 	public Page<Article> findByPageByPageAndKeyWord(String keyWord, Pageable pageable) {
 		return articleRepository.findByBrandContains(keyWord, pageable);
+	}
+
+	@Override
+	public void addArticleToCart(Long idArticle) {
+		// gestion du panier daans metier
+
+				/** verifier l'existanec de l'ARTICLE ID */
+				Article article = articleRepository.findById(idArticle).get();
+
+				if (article != null) {
+					if (cartMap.containsKey(idArticle)) {// add the same product -> quantity incremented
+						article.setQuantity(article.getQuantity() + 1);
+						cartMap.put(article.getId(), article);
+
+					} else // new product in the bucket (first time)
+						cartMap.put(article.getId(), article);
+				}
+		
+	}
+
+	@Override
+	public Map<Long, Article> getMyCart() {
+		return cartMap;
 	}
 
 }
