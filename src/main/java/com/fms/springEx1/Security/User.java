@@ -11,6 +11,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.fms.springEx1.Entities.Order;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +22,7 @@ import lombok.NoArgsConstructor;
 
 @Data @AllArgsConstructor @NoArgsConstructor
 @Entity
+@Table(name = "USERS")
 public class User {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long userId;
@@ -32,8 +37,8 @@ public class User {
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Role> roles = new ArrayList<>();
 
-//	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//	private List<Order> orders;
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<Order> orders;
 	
 	
 	

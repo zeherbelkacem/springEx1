@@ -25,10 +25,18 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 	
 	/**
 	 * 
+	 * @param keyWord
+	 * @param pageable
+	 * @return
+	 */
+	public Page<Article> findByCategoryName(String keyWord, Pageable pageable);
+	
+	/**
+	 * 
 	 * @param name
 	 * @return
 	 */
-	public List<Article> findByCategoryName(CategoryEnum name);
+	public List<Article> findByCategoryName(String name);
 	
 	/**
 	 * 

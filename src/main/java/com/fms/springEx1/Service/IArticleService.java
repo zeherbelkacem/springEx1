@@ -62,7 +62,7 @@ public interface IArticleService {
 	 * @param name
 	 * @return
 	 */
-	public List<Article> readArticleByCatgoryName(CategoryEnum name);
+	public List<Article> readArticleByCatgoryName(String name);
 	
 	/**
 	 * 
@@ -79,6 +79,14 @@ public interface IArticleService {
 	 * @return
 	 */
 	public Page<Article> findByPageByPageAndKeyWord(String keyWord, Pageable pageable);
+	
+	/**
+	 * 
+	 * @param name
+	 * @param pageable
+	 * @return
+	 */
+	public Page<Article> findByPageByPageAndCategoryName(String name, Pageable pageable);
 
 	/**
 	 * 
@@ -87,5 +95,5 @@ public interface IArticleService {
 	public void addArticleToCart(Long idArticle);
 
 	public Map<Long, Article> getMyCart();
-	
+
 }

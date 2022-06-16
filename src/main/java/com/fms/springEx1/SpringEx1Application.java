@@ -1,6 +1,7 @@
 package com.fms.springEx1;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -12,8 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.fms.springEx1.Entities.Article;
 import com.fms.springEx1.Entities.Category;
-import com.fms.springEx1.Repository.ArticleRepository;
-import com.fms.springEx1.Repository.CategoryRepository;
+import com.fms.springEx1.Entities.Order;
 import com.fms.springEx1.Security.Role;
 import com.fms.springEx1.Security.RoleEnum;
 import com.fms.springEx1.Security.RoleService;
@@ -21,6 +21,8 @@ import com.fms.springEx1.Security.User;
 import com.fms.springEx1.Security.UserService;
 import com.fms.springEx1.Service.IArticleService;
 import com.fms.springEx1.Service.ICategoryService;
+import com.fms.springEx1.Service.OrderItemService;
+import com.fms.springEx1.Service.OrderService;
 
 @SpringBootApplication
 public class SpringEx1Application implements CommandLineRunner {
@@ -43,6 +45,13 @@ public class SpringEx1Application implements CommandLineRunner {
 	private ICategoryService categoryService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private RoleService roleService;
+	@Autowired
+	private OrderService orderService;
+//	@Autowired
+//	private OrderItemService orderItemService;
+	
 
 
 
@@ -55,15 +64,15 @@ public class SpringEx1Application implements CommandLineRunner {
 		/*
 		 * 
 		 */
-		/*
-		 * Role adminRole = new Role(0, RoleEnum.ADMIN); Role userRole = new Role(0,
-		 * RoleEnum.USER); List<Role> adminRoles = new ArrayList<Role>(); List<Role>
-		 * userRoles = new ArrayList<Role>();; adminRoles.add(adminRole);
-		 * adminRoles.add(userRole); userRoles.add(userRole); roleService.saveRole(new
-		 * Role(0, RoleEnum.ADMIN)); roleService.saveRole(new Role(0, RoleEnum.USER));
-		 * userService.saveUser(new User(0, "belka@fms.com", "1234", true, null));
-		 * userService.saveUser(new User(0, "ilyas@fms.com", "1234", true, null));
-		 */
+		
+//		  Role adminRole = new Role(0, RoleEnum.ADMIN); Role userRole = new Role(0,
+//		  RoleEnum.USER); List<Role> adminRoles = new ArrayList<Role>(); List<Role>
+//		  userRoles = new ArrayList<Role>();; adminRoles.add(adminRole);
+//		  adminRoles.add(userRole); userRoles.add(userRole); roleService.saveRole(new
+//		  Role(0, RoleEnum.ADMIN)); roleService.saveRole(new Role(0, RoleEnum.USER));
+//		  userService.saveUser(new User(0, "belka@fms.com", "1234", true, null, null));
+//		  userService.saveUser(new User(0, "ilyas@fms.com", "1234", true, null, null));
+		 
 //		
 		//System.out.println(userService.readById(1).getRoles().get(0).getRole());
 		//System.out.println(userService.findUserByEmailAndPassword("ilyas@fms.com", "1234").getRoles());
@@ -72,55 +81,58 @@ public class SpringEx1Application implements CommandLineRunner {
 		 * Save some categories
 		 */
 		
-		/*
-		 * Category pc = new Category("PC"); Category smartphone = new
-		 * Category("SMARTPHONE"); Category tablet = new Category("TABLET"); Category
-		 * hardware = new Category("HARDWARE"); Category other = new Category("OTHER");
-		 * categoryService.saveCategory(pc); categoryService.saveCategory(smartphone);
-		 * categoryService.saveCategory(tablet); categoryService.saveCategory(hardware);
-		 * categoryService.saveCategory(other);
-		 */
+		
+//		  Category pc = new Category("PC"); Category smartphone = new
+//		  Category("SMARTPHONE"); Category tablet = new Category("TABLET"); Category
+//		  hardware = new Category("HARDWARE"); Category other = new Category("OTHER");
+//		  categoryService.saveCategory(pc); categoryService.saveCategory(smartphone);
+//		  categoryService.saveCategory(tablet); categoryService.saveCategory(hardware);
+//		  categoryService.saveCategory(other);
+		 
 		 
 
 		/*
 		 * Save some Articles
 		 */
 		
-		/*
-		 * articleService.saveArticle(new Article(null, "S10", "Samsung", (double) 350,
-		 * smartphone)); articleService.saveArticle(new Article(null, "S7", "Samsung",
-		 * 300., smartphone)); articleService.saveArticle(new Article(null, "MI10",
-		 * "Xiomi", 250D, smartphone)); articleService.saveArticle(new Article(null,
-		 * "GalaxyTab", "Samsung", (double) 150, tablet));
-		 * articleService.saveArticle(new Article(null, "EliteBook 16G", "HP", (double)
-		 * 1350, pc)); articleService.saveArticle(new Article(null, "Ipad", "Apple",
-		 * (double) 100, tablet)); articleService.saveArticle(new Article(null,
-		 * "Chargeur PC", "hp", (double) 80, hardware));
-		 * 
-		 * articleService.saveArticle(new Article(null, "S11", "Samsung", (double) 350,
-		 * smartphone)); articleService.saveArticle(new Article(null, "S12", "Samsung",
-		 * 300., smartphone)); articleService.saveArticle(new Article(null, "MI09",
-		 * "Xiomi", 250D, smartphone)); articleService.saveArticle(new Article(null,
-		 * "tab enfant", "Gulli", (double) 150, tablet)); articleService.saveArticle(new
-		 * Article(null, "EliteBook 16G", "HP", (double) 1350, pc));
-		 * articleService.saveArticle(new Article(null, "Ipad", "Apple", (double) 150,
-		 * tablet)); articleService.saveArticle(new Article(null, "casque ", "hp",
-		 * (double) 80, hardware)); articleService.saveArticle(new Article(null, "S11",
-		 * "Samsung", (double) 350, other)); articleService.saveArticle(new
-		 * Article(null, "S12", "Samsung", 300., other)); articleService.saveArticle(new
-		 * Article(null, "MI09", "Xiomi", 250D, other)); articleService.saveArticle(new
-		 * Article(null, "tab enfant", "Gulli", (double) 150, other));
-		 * articleService.saveArticle(new Article(null, "EliteBook 16G", "HP", (double)
-		 * 1350, other)); articleService.saveArticle(new Article(null, "Ipad", "Apple",
-		 * (double) 100, other)); articleService.saveArticle(new Article(null,
-		 * "casque ", "hp", (double) 80, other));
-		 */
+		
+//		  articleService.saveArticle(new Article(null, "S10", "Samsung", (double) 350,
+//		  smartphone)); 
+//		articleService.saveArticle(new Article(null, "S7", "Samsung",
+//		  300., smartphone)); articleService.saveArticle(new Article(null, "MI10",
+//		  "Xiomi", 250D, smartphone)); articleService.saveArticle(new Article(null,
+//		  "GalaxyTab", "Samsung", (double) 150, tablet));
+//		  articleService.saveArticle(new Article(null, "EliteBook 16G", "HP", (double)
+//		  1350, pc)); articleService.saveArticle(new Article(null, "Ipad", "Apple",
+//		  (double) 100, tablet)); articleService.saveArticle(new Article(null,
+//		  "Chargeur PC", "hp", (double) 80, hardware));
+//		  
+//		  articleService.saveArticle(new Article(null, "S11", "Samsung", (double) 350,
+//		  smartphone)); articleService.saveArticle(new Article(null, "S12", "Samsung",
+//		  300., smartphone)); articleService.saveArticle(new Article(null, "MI09",
+//		  "Xiomi", 250D, smartphone)); articleService.saveArticle(new Article(null,
+//		  "tab enfant", "Gulli", (double) 150, tablet)); articleService.saveArticle(new
+//		  Article(null, "EliteBook 16G", "HP", (double) 1350, pc));
+//		  articleService.saveArticle(new Article(null, "Ipad", "Apple", (double) 150,
+//		  tablet)); articleService.saveArticle(new Article(null, "casque ", "hp",
+//		  (double) 80, hardware)); articleService.saveArticle(new Article(null, "S11",
+//		  "Samsung", (double) 350, other)); articleService.saveArticle(new
+//		  Article(null, "S12", "Samsung", 300., other)); articleService.saveArticle(new
+//		  Article(null, "MI09", "Xiomi", 250D, other)); articleService.saveArticle(new
+//		  Article(null, "tab enfant", "Gulli", (double) 150, other));
+//		  articleService.saveArticle(new Article(null, "EliteBook 16G", "HP", (double)
+//		  1350, other)); articleService.saveArticle(new Article(null, "Ipad", "Apple",
+//		  (double) 100, other)); articleService.saveArticle(new Article(null,
+//		  "casque ", "hp", (double) 80, other));
+		 
 		 
 
-		while (true) {
-			System.out.println("Bienvenue dans votre LIBRAIRIE. Voici la liste de nos livres ");
-			welcomeMenu();
-		}
+//		while (true) {
+//			System.out.println("Bienvenue dans votre LIBRAIRIE. Voici la liste de nos livres ");
+//			welcomeMenu();
+//		}
+		
+		
 		/*
 		 * Some requests TEST
 		 */
@@ -258,6 +270,7 @@ public class SpringEx1Application implements CommandLineRunner {
 						+ "Pour SUPPRIMER un article dans le PANIER               enter (4)\n"
 						+ "Pour AFFICHER et VALIDER le PANIER,                    enter (5)\n"
 						+ "Pour recuperer la FACTURE-COMMANDE (admin),            enter (6)\n"
+						+ "Pour afficher TOUS les ARTICLES page par page,         enter (7)\n"
 						+ "SORTIR de l'application,                               enter (0)\n"
 						+ "----------------------------------------------------------------");
 
@@ -294,6 +307,11 @@ public class SpringEx1Application implements CommandLineRunner {
 
 				case 6:
 					int orderId = (int) getPositiveIntegerInput(scanner, "\nEntrez l'ID de la commande concernée!");
+					//getInvoice(orderId);
+					break;
+					
+				case 7:
+					showArticlesPageByPage();
 					//getInvoice(orderId);
 					break;
 
@@ -351,12 +369,12 @@ public class SpringEx1Application implements CommandLineRunner {
 				if (confirm == 1) {
 					double totalprice = 0;
 
-					//int lastOrderId = shopJob.getLastOrderId(); // get the last order ID
+					long lastOrderId = orderService.getLastOrderId(); // get the last order ID
 					/*
 					 * As we can't add or update a child (orderitem) row (foreign key constraint,
 					 * start by save a default parent row (order)
 					 */
-				//	shopJob.insertOrderLineToOrder(new Order(0, new Date(), totalprice, userId));
+					orderService.insertOrderLineToOrder(new Order(0, new Date(), totalprice, null, null));
 
 					/* each line in the bucket corresponds to an item in the order table */
 					for (Map.Entry<Long, Article> entry : myCart.entrySet()) {

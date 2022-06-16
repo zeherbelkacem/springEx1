@@ -83,7 +83,7 @@ public class ArticleService implements IArticleService{
 	 * 
 	 */
 	@Override
-	public List<Article> readArticleByCatgoryName(CategoryEnum name) {
+	public List<Article> readArticleByCatgoryName(String name) {
 		return articleRepository.findByCategoryName(name);
 	}
 
@@ -121,6 +121,11 @@ public class ArticleService implements IArticleService{
 	@Override
 	public Map<Long, Article> getMyCart() {
 		return cartMap;
+	}
+
+	@Override
+	public Page<Article> findByPageByPageAndCategoryName(String name, Pageable pageable) {
+		return articleRepository.findByCategoryName(name, pageable);
 	}
 
 }

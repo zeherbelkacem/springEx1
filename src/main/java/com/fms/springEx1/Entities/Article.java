@@ -9,9 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-
-import org.springframework.boot.context.properties.bind.DefaultValue;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * 
@@ -31,12 +31,15 @@ public class Article implements Serializable {
 	private Long id;
 
 	@Column(name = "DESCRIPTION")
+	@NotNull
+	@Size(min = 10, max = 50)
 	private String description;
 
 	@Column(name = "BRAND")
 	private String brand;
 
 	@Column(name = "PRICE")
+	@DecimalMin("10")
 	private Double price;
 	
 	@Column(name = "QUANTITY")
