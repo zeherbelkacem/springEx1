@@ -42,7 +42,8 @@ public class AdminController {
 	@RequestMapping("/admin")
 	public String articleList(Model model, @RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "5") int size,
-			@RequestParam(name = "keyWord", defaultValue = "") String keyWord, @RequestParam(name = "id", defaultValue = "") Long id) {
+			@RequestParam(name = "keyWord", defaultValue = "") String keyWord,
+			@RequestParam(name = "id", defaultValue = "") Long id) {
 
 		/*
 		 * Pagination without key word
@@ -74,12 +75,21 @@ public class AdminController {
 	 * @return
 	 */
 	@RequestMapping("admin/categories")
-	public String adminCategorie(Model model, @RequestParam(name = "catId", defaultValue = "") Long catId) {
-		if(catId != null)
+	public String adminCategorie(Model model, @RequestParam(name = "catId", defaultValue = "") Long catId,
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "4") int size,
+			@RequestParam(name = "catName", defaultValue = "") String catName) {
+		if (catId != null)
 			categoryService.deleteCategory(catId);
-		List<Category> categories = categoryService.readAllCategories();
+		//List<Category> categories = categoryService.readAllCategories();
+		Page<Category> categoriesPage = categoryService.categoriesPageByPage(PageRequest.of(page, size));
+		model.addAttribute("currentPage", page);
+		model.addAttribute("size", size);
+		model.addAttribute("pages", new int[categoriesPage.getTotalPages()]);
+		model.addAttribute("totalPages", categoriesPage.getTotalPages());
+		model.addAttribute("catName", catName);
 		model.addAttribute("listOf", "List of categories");
-		model.addAttribute("listCategories", categories);
+		model.addAttribute("listCategories", categoriesPage);
 		return "category";
 	}
 
@@ -94,8 +104,6 @@ public class AdminController {
 			@RequestParam(name = "size", defaultValue = "5") int size,
 			@RequestParam(name = "catName", defaultValue = "") String catName) {
 
-		
-		
 		Page<Article> articles = articleService.findByPageByPageAndCategoryName(catName, PageRequest.of(page, size));
 		if (!articles.isEmpty()) {
 			model.addAttribute("currentPage", page);

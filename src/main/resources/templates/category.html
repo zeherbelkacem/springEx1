@@ -15,11 +15,6 @@
 	<div layout:fragment="admin">
 		<div class="card text-center">
 
-
-
-
-
-
 			<div class="card-body">
 				<!-- <h5 class="card-title">List of articles</h5> -->
 				<div class="row g-3">
@@ -29,7 +24,8 @@
 					</div>
 					<div class="col-6">
 						<form class="form-inline input-group">
-							<input class="form-control mr-sm-2" name="catName" type="search" placeholder="Search" aria-label="Search">
+							<input class="form-control mr-sm-2" name="catName" type="search" placeholder="Search"
+								aria-label="Search">
 							<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 						</form>
 					</div>
@@ -47,10 +43,12 @@
 						<tr th:each="c:${listCategories}">
 							<td th:text="${c.id}">
 								</th>
-							<td><a th:href="@{articlesByCategory(catName=${c.name })}" data-toggle="tooltip" data-placement="top"
-									title="See corresponding articles!" class="text-decoration-none" th:text="${c.name}"></a></td>
+							<td><a th:href="@{articlesByCategory(catName=${c.name })}" data-toggle="tooltip"
+									data-placement="top" title="See corresponding articles!"
+									class="text-decoration-none" th:text="${c.name}"></a></td>
 							<td>
-								<a th:href="@{categories(catId=${c.id })}" class="btn btn-danger btn-block"><svg xmlns="http://www.w3.org/2000/svg"
+								<a th:href="@{categories(catId=${c.id })}" class="btn btn-danger btn-block"
+									onclick="return confirm('Are you sure?')"><svg xmlns="http://www.w3.org/2000/svg"
 										width="16" height="16" fill="currentColor" class="bi bi-trash"
 										viewBox="0 0 16 16">
 										<path
@@ -60,9 +58,9 @@
 									</svg></a>
 							</td>
 							<td>
-								<a href="#" class="btn btn-light btn-block"><svg xmlns="http://www.w3.org/2000/svg"
-										width="16" height="16" fill="currentColor" class="bi bi-pencil-square"
-										viewBox="0 0 16 16">
+								<a th:href="@{categories/updateCategoryForm(id=${c.id})}" class="btn btn-light btn-block"><svg
+										xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+										class="bi bi-pencil-square" viewBox="0 0 16 16">
 										<path
 											d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
 										<path fill-rule="evenodd"
@@ -72,7 +70,31 @@
 						</tr>
 					</tbody>
 				</table>
+				<div>
+						<nav aria-label="...">
+							<ul class="pagination justify-content-center">
 
+
+								<li th:class="${currentPage==0 ? 'page-item disabled' : 'page-item'} ">
+									<a class="page-link"
+										th:href="@{categories(page=${currentPage-1}, size=${size}, catName=${catName} ) }">Previous</a>
+								</li>
+
+								<li th:each="page,status:${pages}"><a
+										th:class="${status.index==currentPage?'btn btn-primary':'btn'  }"
+										th:href="@{ categories(page=${status.index}, size=${size}, catName=${catName}) }"
+										th:text="${status.index }"></a></li>
+
+								<li class="page-item"><a class="page-link"
+										th:href="@{ categories(page=${currentPage+1}, size=${size}, catName=${catName} )}">Next</a>
+								</li>
+								<li class="page-item"><a class="page-link"
+										th:href="@{categories(page=${totalPages-1}, size=${size}, catName=${catName} )}">Last</a>
+
+								</li>
+							</ul>
+						</nav>
+					</div>
 				<div class="card-footer text-muted">
 					<a th:href="@{categories/saveCategoryForm}" class="btn btn-secondary btn-lg">Add new category</a>
 				</div>

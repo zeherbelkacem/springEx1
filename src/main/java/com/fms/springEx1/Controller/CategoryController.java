@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fms.springEx1.Entities.Category;
 import com.fms.springEx1.Service.ICategoryService;
@@ -30,13 +31,25 @@ public class CategoryController {
 	
 	/**
 	 * 
+	 * @param model
+	 * @param id
+	 * @return
+	 */
+	@GetMapping("admin/categories/updateCategoryForm")
+	public String updateArticleForm(Model model, @RequestParam(name = "id", defaultValue = "") Long id) {
+		model.addAttribute("category", categoryService.getCategoryById(id));
+		return "saveNewCategory";
+	}
+	
+	/**
+	 * 
 	 * @param article
 	 * @param bindingResult
 	 * @return
 	 */
 	@PostMapping("admin/categories/saveCategory")
 	public String saveArticle(@Valid Category category, BindingResult bindingResult) {
-		
+		System.out.println(category);
 		if (bindingResult.hasErrors()) {
 			return "saveNewCategory";
 		}

@@ -1,6 +1,7 @@
 package com.fms.springEx1.Controller;
 
-import java.nio.Buffer;
+import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -31,7 +32,15 @@ public class ArticleController {
 	@RequestMapping("/shop")
 	public String articleList(Model model, @RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "5") int size,
-			@RequestParam(name = "keyWord", defaultValue = "") String keyWord) {
+			@RequestParam(name = "keyWord", defaultValue = "") String keyWord,
+			@RequestParam(name = "idToCart", defaultValue = "") Long idToCart) {
+
+		if (idToCart != null) {
+			articleService.addArticleToCart(idToCart);
+			Map<Long, Article> articlesCart = articleService.getMyCart();
+			System.out.println(articlesCart.values());
+			model.addAttribute("cartArticles", articlesCart.values());
+		}
 
 		/*
 		 * Pagination without key word
@@ -41,6 +50,9 @@ public class ArticleController {
 		 * Pagination using key word
 		 */
 		Page<Article> articles = articleService.findByPageByPageAndKeyWord(keyWord, PageRequest.of(page, size));
+
+		List<Category> categories = categoryService.readAllCategories();
+		model.addAttribute("categories", categories);
 		model.addAttribute("currentPage", page);
 		model.addAttribute("size", size);
 		model.addAttribute("pages", new int[articles.getTotalPages()]);
@@ -88,5 +100,6 @@ public class ArticleController {
 		model.addAttribute("article", articleService.readById(id));
 		return "saveNewArticle";
 	}
+
 
 }
