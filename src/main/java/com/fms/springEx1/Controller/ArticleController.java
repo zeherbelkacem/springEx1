@@ -38,7 +38,9 @@ public class ArticleController {
 		if (idToCart != null) {
 			articleService.addArticleToCart(idToCart);
 			Map<Long, Article> articlesCart = articleService.getMyCart();
-			System.out.println(articlesCart.values());
+			model.addAttribute("totalPrice", articleService.getTotalSum());
+			model.addAttribute("totalCartArticles", articlesCart.values().size() );
+			//System.out.println(articlesCart.values());
 			model.addAttribute("cartArticles", articlesCart.values());
 		}
 

@@ -93,7 +93,17 @@ public interface IArticleService {
 	 * @param idArticle
 	 */
 	public void addArticleToCart(Long idArticle);
-
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public Map<Long, Article> getMyCart();
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Double getTotalSum();
 
 }

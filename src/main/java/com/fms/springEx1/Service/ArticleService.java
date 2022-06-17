@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -126,6 +127,20 @@ public class ArticleService implements IArticleService{
 	@Override
 	public Page<Article> findByPageByPageAndCategoryName(String name, Pageable pageable) {
 		return articleRepository.findByCategoryName(name, pageable);
+	}
+
+	@Override
+	public Double getTotalSum() {
+		Double productTotalPrice = 0.0;
+		Double TotalPrice = 0.0;
+		/* Start to fill the table body with the selected training */
+		for (Entry<Long, Article> entry : cartMap.entrySet()) {
+			productTotalPrice = entry.getValue().getPrice() * entry.getValue().getQuantity();
+			
+	
+			TotalPrice += productTotalPrice;
+		}
+		return TotalPrice;
 	}
 
 }
