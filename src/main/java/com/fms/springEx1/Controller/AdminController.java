@@ -66,6 +66,7 @@ public class AdminController {
 		model.addAttribute("totalPages", articles.getTotalPages());
 		model.addAttribute("keyWord", keyWord);
 		model.addAttribute("listArticle", articles);
+		model.addAttribute("listOf", "List of articles");
 		return "admin";
 	}
 

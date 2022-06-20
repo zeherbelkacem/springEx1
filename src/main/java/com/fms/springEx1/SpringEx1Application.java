@@ -1,6 +1,5 @@
 package com.fms.springEx1;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -14,14 +13,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.fms.springEx1.Entities.Article;
 import com.fms.springEx1.Entities.Category;
 import com.fms.springEx1.Entities.Order;
-import com.fms.springEx1.Security.Role;
 import com.fms.springEx1.Security.RoleEnum;
 import com.fms.springEx1.Security.RoleService;
 import com.fms.springEx1.Security.User;
 import com.fms.springEx1.Security.UserService;
 import com.fms.springEx1.Service.IArticleService;
 import com.fms.springEx1.Service.ICategoryService;
-import com.fms.springEx1.Service.OrderItemService;
 import com.fms.springEx1.Service.OrderService;
 
 @SpringBootApplication

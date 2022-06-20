@@ -31,7 +31,7 @@ public class Article implements Serializable {
 	private Long id;
 
 	@Column(name = "DESCRIPTION")
-	@NotNull
+	@NotNull(message = "Can't be null!")
 	@Size(min = 10, max = 50)
 	private String description;
 
@@ -41,12 +41,12 @@ public class Article implements Serializable {
 	@Column(name = "PRICE")
 	@DecimalMin("10")
 	private Double price;
-	
+
 	@Column(name = "QUANTITY")
-	private int quantity = 1;
-	
+	private int quantity;
+
 	@ManyToOne
-	@JoinColumn(name = "CATEGORY_ID")//It will have the same name by default
+	@JoinColumn(name = "CATEGORY_ID") // It will have the same name by default
 	private Category category;
 
 	/**
@@ -54,7 +54,8 @@ public class Article implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "Article [id=" + id + ", description=" + description + ", brand=" + brand + ", price=" + price +", category=" + category.getName() + "]";
+		return "Article [id=" + id + ", description=" + description + ", brand=" + brand + ", price=" + price
+				+ ", category=" + category.getName() + "]";
 	}
 
 	public int getQuantity() {
@@ -167,8 +168,6 @@ public class Article implements Serializable {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
-	
-	
 
 	public Category getCategory() {
 		return category;

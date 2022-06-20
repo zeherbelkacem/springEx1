@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 
 import com.fms.springEx1.Entities.Order;
 
@@ -28,8 +30,10 @@ public class User {
 	private long userId;
 	
 	@Column(name = "EMAIL")
+	@Email(regexp = ".+[@].+[\\.].+", message = "Please enter à valid mail")
 	private String email;
 	
+	@NotNull
 	private String password;
 	
 	private Boolean enable;

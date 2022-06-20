@@ -1,5 +1,6 @@
 package com.fms.springEx1.Controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -33,16 +34,20 @@ public class ArticleController {
 	public String articleList(Model model, @RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "5") int size,
 			@RequestParam(name = "keyWord", defaultValue = "") String keyWord,
-			@RequestParam(name = "idToCart", defaultValue = "") Long idToCart) {
+			@RequestParam(name = "catName", defaultValue = "") String catName,
+			@RequestParam(name = "idToCart", defaultValue = "") Long idToCart,
+			@RequestParam(name = "idToRm", defaultValue = "") Long idToRm,
+			@RequestParam(name = "quantity", defaultValue = "") String quantity) {
 
-		if (idToCart != null) {
+		if (idToCart != null)
 			articleService.addArticleToCart(idToCart);
-			Map<Long, Article> articlesCart = articleService.getMyCart();
-			model.addAttribute("totalPrice", articleService.getTotalSum());
-			model.addAttribute("totalCartArticles", articlesCart.values().size() );
-			//System.out.println(articlesCart.values());
-			model.addAttribute("cartArticles", articlesCart.values());
-		}
+		if (idToRm != null)
+			articleService.removeArticleFromCart(idToRm);
+		Map<Long, Article> articlesCart = articleService.getMyCart();
+		model.addAttribute("totalPrice", articleService.getTotalSum());
+		model.addAttribute("totalCartArticles", articlesCart.values().size());
+		// System.out.println(articlesCart.values());
+		model.addAttribute("cartArticles", articlesCart.values());
 
 		/*
 		 * Pagination without key word
@@ -51,7 +56,12 @@ public class ArticleController {
 		/*
 		 * Pagination using key word
 		 */
-		Page<Article> articles = articleService.findByPageByPageAndKeyWord(keyWord, PageRequest.of(page, size));
+
+		Page<Article> articles;
+		if (!catName.equalsIgnoreCase(""))
+			articles = articleService.readByBrandContainsAndCategoryName(keyWord, catName, PageRequest.of(page, size));
+		else
+			articles = articleService.findByPageByPageAndKeyWord(keyWord, PageRequest.of(page, size));
 
 		List<Category> categories = categoryService.readAllCategories();
 		model.addAttribute("categories", categories);
@@ -61,6 +71,7 @@ public class ArticleController {
 		model.addAttribute("totalPages", articles.getTotalPages());
 		model.addAttribute("keyWord", keyWord);
 		model.addAttribute("listArticle", articles);
+		model.addAttribute("listOf", "List of articles");
 		return "shop";
 	}
 
@@ -71,7 +82,6 @@ public class ArticleController {
 	@GetMapping("admin/saveArticleForm")
 	public String saveArticleForm(Model model) {
 		model.addAttribute("category", categoryService.readAllCategories());
-
 		model.addAttribute("article", new Article());
 		return "saveNewArticle";
 	}
@@ -87,9 +97,8 @@ public class ArticleController {
 	public String saveArticle(@Valid Article article, BindingResult bindingResult,
 			@RequestParam("catName") String catName) {
 		if (bindingResult.hasErrors()) {
-			return "saveNewArticle";
+			return "redirect:/admin/saveArticleForm";
 		}
-		System.out.println(article.getId());
 		article.setCategory(categoryService.getCategoryByName(catName));
 		articleService.saveArticle(article);
 		return "redirect:/admin";
@@ -103,5 +112,56 @@ public class ArticleController {
 		return "saveNewArticle";
 	}
 
+	/**
+	 * 
+	 * @param name
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping("/articlesByCategory")
+	public String articlesByCategory(Model model, @RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "5") int size,
+			@RequestParam(name = "catName", defaultValue = "") String catName,
+			@RequestParam(name = "idToRm", defaultValue = "") Long idToRm,
+			@RequestParam(name = "idToCart", defaultValue = "") Long idToCart) {
+
+		if (idToCart != null)
+			articleService.addArticleToCart(idToCart);
+		if (idToRm != null)
+			articleService.removeArticleFromCart(idToRm);
+		Map<Long, Article> articlesCart = articleService.getMyCart();
+		model.addAttribute("totalPrice", articleService.getTotalSum());
+		model.addAttribute("totalCartArticles", articlesCart.values().size());
+		// System.out.println(articlesCart.values());
+		model.addAttribute("cartArticles", articlesCart.values());
+
+		Page<Article> articles = articleService.findByPageByPageAndCategoryName(catName, PageRequest.of(page, size));
+		if (articles.isEmpty())
+			articles.isEmpty(); // initialize articles page to empty
+
+		model.addAttribute("currentPage", page);
+		model.addAttribute("size", size);
+		model.addAttribute("pages", new int[articles.getTotalPages()]);
+		model.addAttribute("totalPages", articles.getTotalPages());
+		model.addAttribute("listOf", "Articles of " + catName + " caterory");
+		model.addAttribute("listArticle", articles);
+		model.addAttribute("categories", categoryService.readAllCategories());
+//			model.addAttribute("keyWord", articles.getContent().get(0).getBrand());
+
+		return "shop";
+	}
+
+	@RequestMapping("shop/cart")
+	public String articleList(Model model, @RequestParam(name = "idToRm", defaultValue = "") Long idToRm) {
+
+		if (idToRm != null)
+			articleService.removeArticleFromCart(idToRm);
+		Map<Long, Article> articlesCart = articleService.getMyCart();
+		model.addAttribute("totalPrice", articleService.getTotalSum());
+		model.addAttribute("totalCartArticles", articlesCart.values().size());
+		// System.out.println(articlesCart.values());
+		model.addAttribute("cartArticles", articlesCart.values());
+		return "cart";
+	}
 
 }

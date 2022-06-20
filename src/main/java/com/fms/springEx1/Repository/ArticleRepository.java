@@ -29,6 +29,14 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 	 * @param pageable
 	 * @return
 	 */
+	public Page<Article> findByBrandContainsAndCategoryName(String keyWord, String catName, Pageable pageable);
+	
+	/**
+	 * 
+	 * @param keyWord
+	 * @param pageable
+	 * @return
+	 */
 	public Page<Article> findByCategoryName(String keyWord, Pageable pageable);
 	
 	/**

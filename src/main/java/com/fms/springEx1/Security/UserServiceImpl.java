@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
-
+	long userId = 0;
 	@Autowired
 	private UserRepository userRepository;
 	
@@ -25,7 +25,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User findUserByEmailAndPassword(String email, String password) {
-		return userRepository.findByEmailAndPassword(email, password);
+		User user = userRepository.findByEmailAndPassword(email, password);
+		if(user != null) userId = user.getUserId();
+		return user;
 	}
 
 	@Override
@@ -36,6 +38,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User readById(long id) {
 		return userRepository.findById(id).get();
+	}
+
+	@Override
+	public long getUserId() {
+		return userId;
 	}
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import com.fms.springEx1.Entities.Article;
@@ -100,10 +101,20 @@ public interface IArticleService {
 	 */
 	public Map<Long, Article> getMyCart();
 	
+	void removeArticleFromCart(Long idArticle);
 	/**
 	 * 
 	 * @return
 	 */
 	public Double getTotalSum();
+
+	/**
+	 * 
+	 * @param keyWord
+	 * @param catName
+	 * @param pageable
+	 * @return
+	 */
+	public Page<Article> readByBrandContainsAndCategoryName(String keyWord, String catName, Pageable pageable);
 
 }

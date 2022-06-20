@@ -25,6 +25,14 @@
 					<div class="col-3">
 						<a th:href="@{ /admin/categories }" class="w-100 btn btn-secondary btn-block">Categories</a>
 					</div>
+					
+					<div class="col-3">
+						<a th:href="@{ /admin }" class="w-100 btn btn-secondary btn-block">Users</a>
+					</div>
+					
+					<div class="col-3">
+						<a th:href="@{ /admin/orders }" class="w-100 btn btn-secondary btn-block">Orders</a>
+					</div>
 				</div>
 			</div>
 
@@ -58,7 +66,7 @@
 									<th>BRAND</th>
 									<th>PRICE</th>
 									<th>QUANTITY</th>
-									<th>ADD TO CART</th>
+<!--									<th>ADD TO CART</th>-->
 									<th>DELETE</th>
 									<th>UPDATE</th>
 								</tr>
@@ -72,12 +80,12 @@
 										</th>
 									<td th:text="${a.price}"></td>
 									<td>
-										<input type="number" value="1" min="1" max="10" />
+										<input type="number" value="1" min="1" max="10" name="quantity" th:value="${a.quantity}"/>
 									</td>
-									<td>
-										<a href="#" class="btn btn-success btn-sm">Add to cart</a>
+<!--									<td>-->
+<!--										<a href="#" class="btn btn-success btn-sm">Add to cart</a>-->
 
-									</td>
+<!--									</td>-->
 									<td>
 										<a th:href="@{ admin(page=${currentPage}, size=${size}, id=${a.id}) }"
 											class="btn btn-danger btn-block"

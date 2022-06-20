@@ -9,5 +9,11 @@ public interface UserService {
 	public User findUserByEmailAndPassword(String email, String password);
 	public User readById(long id);
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public long getUserId();
+	
 
 }
