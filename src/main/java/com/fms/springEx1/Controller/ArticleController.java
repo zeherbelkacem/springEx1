@@ -106,7 +106,12 @@ public class ArticleController {
 
 	@GetMapping("admin/updateArticleForm")
 	public String updateArticleForm(@RequestParam(name = "id", defaultValue = "") Long id, Model model) {
-		model.addAttribute("articleCategoryName", articleService.readById(id).getCategory().getName());
+		List<String>  CategoryNames = new ArrayList<String>();
+		for(Category c : categoryService.readAllCategories() ){
+			CategoryNames.add(c.getName());
+		}
+		model.addAttribute("categoriesName", CategoryNames);
+//		model.addAttribute("articleCategoryName", articleService.readById(id).getCategory().getName());
 		model.addAttribute("category", categoryService.readAllCategories());
 		model.addAttribute("article", articleService.readById(id));
 		return "saveNewArticle";

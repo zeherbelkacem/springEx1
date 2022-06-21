@@ -5,8 +5,9 @@
 	<title>SHOP</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.css" rel="stylesheet" type="text/css" />
 	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.0.1/css/bootstrap.min.css} " />
-	<link th:rel="stylesheet" th:href="@{webjars/font-awesome/5.15.1/css/all.css} " />
+	
 </head>
 
 </head>
@@ -16,7 +17,7 @@
 		<!-- NAV BAR PRINCIPAL-->
 		<nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
 			<div class="container-fluid">
-				<a class="navbar-brand" th:href="@{/shop}"> SHOP</a>
+				<a class="navbar-brand" th:href="@{/shop}" > SHOP  <i class="fas fa-cart-plus"></i></a> 
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
 					data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
 					aria-label="Toggle navigation">
@@ -72,78 +73,78 @@
 			</div>
 		</nav>
 		<section layout:fragment="cart">
-			
-		<!-- NAV BAR CATGORIES-->
-		<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center mt-3">
-			<ul class="nav justify-content-center" th:each="c:${categories}">
-				<li class="nav-item">
-					<a class="nav-link active" th:href="@{articlesByCategory(catName=${c.name })}"
-						th:text="${c.name}"></a>
-				</li>
 
-			</ul>
-		</nav>
-		<div class="mt-4">
-			<section layout:fragment="section">
-				<div class="row g-2">
-					<div class="col-8">
-						<section layout:fragment="leftCol">
+			<!-- NAV BAR CATGORIES-->
+			<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-center mt-3">
+				<ul class="nav justify-content-center" th:each="c:${categories}">
+					<li class="nav-item">
+						<a class="nav-link active" th:href="@{articlesByCategory(catName=${c.name })}"
+							th:text="${c.name}"></a>
+					</li>
 
-							<div class="card text-center">
-								<div class="card-header">
-									<h1>Welcome to your SHOP</h1>
-								</div>
+				</ul>
+			</nav>
+			<div class="mt-4">
+				<section layout:fragment="section">
+					<div class="row g-2">
+						<div class="col-8">
+							<section layout:fragment="leftCol">
 
-
-								<div class="card-body">
-									<!-- <h5 class="card-title">List of articles</h5> -->
-									<div class="row g-3">
-
-										<div class="col-6">
-											<form th:action="@{/shop}" method="GET" class="form-inline input-group">
-												<input class="form-control mr-sm-2" name="keyWord" type="search"
-													placeholder="Get articles by Brand" aria-label="Search">
-												<button class="btn btn-outline-success my-2 my-sm-0"
-													type="submit">Search</button>
-											</form>
-
-										</div>
-										<div class="col-6 ">
-											<h3 th:text="${listOf}"></h3>
-
-										</div>
+								<div class="card text-center">
+									<div class="card-header">
+										<h1>Welcome to your SHOP <i class="fa-solid fa-cart-circle-plus"></i></h1>
 									</div>
-									<div class="mt-3">
-										<table class="table table-dark table-striped table-hover">
-											<thead>
-												<tr>
-													<!-- <th>ID</th> -->
-													<th>DESCRIPTION</th>
-													<th>BRAND</th>
-													<th>PRICE</th>
-													<th>QUANTITY</th>
-													<th>ADD TO CART</th>
-													<!-- <th>DELETE</th>
+
+
+									<div class="card-body">
+										<!-- <h5 class="card-title">List of articles</h5> -->
+										<div class="row g-3">
+
+											<div class="col-6">
+												<form th:action="@{/shop}" method="GET" class="form-inline input-group">
+													<input class="form-control mr-sm-2" name="keyWord" type="search"
+														placeholder="Get articles by Brand" aria-label="Search">
+													<button class="btn btn-outline-success my-2 my-sm-0"
+														type="submit">Search</button>
+												</form>
+
+											</div>
+											<div class="col-6 ">
+												<h3 th:text="${listOf}"></h3>
+
+											</div>
+										</div>
+										<div class="mt-3">
+											<table class="table table-dark table-striped table-hover">
+												<thead>
+													<tr>
+														<!-- <th>ID</th> -->
+														<th>DESCRIPTION</th>
+														<th>BRAND</th>
+														<th>PRICE</th>
+														<th>QUANTITY</th>
+														<th>ADD TO CART</th>
+														<!-- <th>DELETE</th>
 													<th>UPDATE</th> -->
-												</tr>
-											</thead>
-											<tbody>
-												<tr th:each="a:${listArticle.content}">
-													<!-- <td th:text="${a.id}"></th> -->
-													<td th:text="${a.description}"></td>
-													<td th:text="${a.brand}">
-														</th>
-													<td th:text="${a.price}"></td>
-													<td>
-														<input type="number" value="1" min="1" max="10" />
-													</td>
-													<td>
-														<a th:href="@{ shop(idToCart=${a.id})}"
-															class="btn btn-success btn-sm">Add to cart</a>
+													</tr>
+												</thead>
+												<tbody>
+													<tr th:each="a:${listArticle.content}">
+														<!-- <td th:text="${a.id}"></th> -->
+														<td th:text="${a.description}"></td>
+														<td th:text="${a.brand}">
+															</th>
+														<td th:text="${a.price}"></td>
+														<td>
+															<input type="number" value="1" min="1" max="10" />
+														</td>
+														<td>
+															<a th:href="@{ shop(idToCart=${a.id})}"
+																class="btn btn-success btn-sm">Add to cart</a>
 
-													</td>
+														</td>
 
-													<!-- <td>
+														<!-- <td>
 								<a 
 								href="#"
 									class="btn btn-danger btn-block" 
@@ -163,17 +164,17 @@
 									</svg></a
 								>
 								</td> -->
-												</tr>
-											</tbody>
-										</table>
+													</tr>
+												</tbody>
+											</table>
+
+										</div>
 
 									</div>
-
-								</div>
-								<div class="card-footer text-muted">
-									<nav aria-label="...">
-										<ul class="pagination justify-content-center">
-											<!--<div th:if="${currentPage==0}">
+									<div class="card-footer text-muted">
+										<nav aria-label="...">
+											<ul class="pagination justify-content-center">
+												<!--<div th:if="${currentPage==0}">
 							<li class="page-item  disabled">
 							<a class="page-link"
 								th:href="@{ albumListPageByPage(page=${currentPage-1}, size=${size}, keyWord=${keyWord} ) }">Previous</a>
@@ -186,92 +187,94 @@
 							</li>
 						</div>-->
 
-											<li th:class="${currentPage==0 ? 'page-item disabled' : 'page-item'} ">
-												<a class="page-link"
-													th:href="@{ shop(page=${currentPage-1}, size=${size}, keyWord=${keyWord} ) }">Previous</a>
-											</li>
+												<li th:class="${currentPage==0 ? 'page-item disabled' : 'page-item'} ">
+													<a class="page-link"
+														th:href="@{ shop(page=${currentPage-1}, size=${size}, keyWord=${keyWord} ) }">Previous</a>
+												</li>
 
-											<li th:each="page,status:${pages}"><a
-													th:class="${status.index==currentPage?'btn btn-primary':'btn'  }"
-													th:href="@{ shop(page=${status.index}, size=${size}, keyWord=${keyWord}) }"
-													th:text="${status.index }"></a></li>
+												<li th:each="page,status:${pages}"><a
+														th:class="${status.index==currentPage?'btn btn-primary':'btn'  }"
+														th:href="@{ shop(page=${status.index}, size=${size}, keyWord=${keyWord}) }"
+														th:text="${status.index }"></a></li>
 
-											<li class="page-item"><a class="page-link"
-													th:href="@{ shop(page=${currentPage+1}, size=${size}, keyWord=${keyWord} )}">Next</a>
-											</li>
-											<li class="page-item"><a class="page-link"
-													th:href="@{ shop(page=${totalPages-1}, size=${size}, keyWord=${keyWord} )}">Last</a>
+												<li class="page-item"><a class="page-link"
+														th:href="@{ shop(page=${currentPage+1}, size=${size}, keyWord=${keyWord} )}">Next</a>
+												</li>
+												<li class="page-item"><a class="page-link"
+														th:href="@{ shop(page=${totalPages-1}, size=${size}, keyWord=${keyWord} )}">Last</a>
 
-											</li>
-										</ul>
-									</nav>
+												</li>
+											</ul>
+										</nav>
+									</div>
+
+
+
 								</div>
 
 
-
-							</div>
-
-
-						</section>
-					</div>
+							</section>
+						</div>
 
 
-					<div class="col-4">
-						<section layout:fragment="cart">
-							<div class="card text-center">
-								<div class="card-header">
-									<h1>My Cart</h1>
-								</div>
+						<div class="col-4">
+							<section layout:fragment="cart">
+								<div class="card text-center">
+									<div class="card-header">
+										<h1>My Cart</h1>
+									</div>
 
 
-								<div class="card-body">
-									<table class="table table-dark table-striped table-hover">
-										<thead>
-											<tr>
-												<th>DESCR</th>
-												<th>QT</th>
-												<th>€</th>
-												<th>-</th>
+									<div class="card-body">
+										<table class="table table-dark table-striped table-hover">
+											<thead>
+												<tr>
+													<th>DESCR</th>
+													<th>QT</th>
+													<th>€</th>
+													<th>-</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="ca:${cartArticles}">
+													<td th:text="${ca.description}"></td>
+													<td th:text="${ca.quantity}"></td>
+													<td th:text="${ca.price}"></td>
+													<td>
+														<a th:href="@{ shop(idToRm=${ca.id})}"
+															class="btn btn-danger btn-block"><svg
+																xmlns="http://www.w3.org/2000/svg" width="16"
+																height="16" fill="currentColor" class="bi bi-trash"
+																viewBox="0 0 16 16">
+																<path
+																	d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+																<path fill-rule="evenodd"
+																	d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+															</svg></a>
+													</td>
+												</tr>
+											</tbody>
+											<tr class="bg-success">
+												<td>Total</td>
+												<td></td>
+												<td th:text="${totalPrice}"></td>
+												<td></td>
 											</tr>
-										</thead>
-										<tbody>
-											<tr th:each="ca:${cartArticles}">
-												<td th:text="${ca.description}"></td>
-												<td th:text="${ca.quantity}"></td>
-												<td th:text="${ca.price}"></td>
-												<td>
-													<a th:href="@{ shop(idToRm=${ca.id})}"
-														class="btn btn-danger btn-block"><svg
-															xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-															fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-															<path
-																d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-															<path fill-rule="evenodd"
-																d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-														</svg></a>
-												</td>
-											</tr>
-										</tbody>
-										<tr class="bg-success">
-											<td>Total</td>
-											<td></td>
-											<td th:text="${totalPrice}"></td>
-											<td></td>
-										</tr>
-									</table>
+										</table>
+									</div>
+									<div class="card-footer text-muted">
+										<a th:href="@{shop/cart}" class="btn btn-secondary btn-block">See cart</a>
+									</div>
 								</div>
-								<div class="card-footer text-muted">
-						<a th:href="@{shop/cart}" class="btn btn-secondary btn-block">See cart</a>
-					</div>
-							</div>
-						</section>
-					</div>
+							</section>
+						</div>
 
 
-				</div>
-			</section>
-		</div>
-	</section>
+					</div>
+				</section>
+			</div>
+		</section>
+
 	</div>
 
 

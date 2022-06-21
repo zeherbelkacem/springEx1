@@ -29,8 +29,8 @@ public class OrdersController {
 	@RequestMapping("admin/orders")
 	public String adminOrders(Model model, @RequestParam(name = "Id", defaultValue = "") Long Id,
 			@RequestParam(name = "page", defaultValue = "0") int page,
-			@RequestParam(name = "size", defaultValue = "4") int size,
-			@RequestParam(name = "date", defaultValue = "--/--/--") Date date
+			@RequestParam(name = "size", defaultValue = "4") int size
+			
 			) {
 		
 		Page<Order> ordersPages = orderService.ordersPageByPage(PageRequest.of(page, size));
