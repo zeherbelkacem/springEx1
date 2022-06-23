@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fms.springEx1.Security.User;
+import com.fms.springEx1.Security.Uuser;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,5 +36,5 @@ public class Order {
 	private List<OrderItem> orderItems;
 	
 	@ManyToOne
-	private User user;
+	private Uuser user;
 }

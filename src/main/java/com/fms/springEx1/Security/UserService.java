@@ -2,18 +2,25 @@ package com.fms.springEx1.Security;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 public interface UserService {
-	public List<User> readAll();
-	public User saveUser(User user);
-	public User FindUserByEmail(String email);
-	public User findUserByEmailAndPassword(String email, String password);
-	public User readById(long id);
+	public List<Uuser> readAll();
+	public Uuser saveUuser(Uuser user);
+	public Uuser findUuserByEmail(String email);
+	public Uuser findUuserByUserName(String userName);
+	public Uuser findUserByEmailAndPassword(String email, String password);
+	public Uuser readById(long id);
 	
 	/**
 	 * 
 	 * @return
 	 */
 	public long getUserId();
+	public Page<Uuser> findByPageByPageAndEmail(String email, Pageable pageable);
+	
+	
 	
 
 }

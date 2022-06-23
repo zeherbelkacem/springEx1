@@ -9,14 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.fms.springEx1.Entities.Article;
 import com.fms.springEx1.Entities.Category;
 import com.fms.springEx1.Entities.Order;
-import com.fms.springEx1.Security.RoleEnum;
 import com.fms.springEx1.Security.RoleService;
-import com.fms.springEx1.Security.User;
 import com.fms.springEx1.Security.UserService;
+import com.fms.springEx1.Security.Uuser;
 import com.fms.springEx1.Service.IArticleService;
 import com.fms.springEx1.Service.ICategoryService;
 import com.fms.springEx1.Service.OrderService;
@@ -30,9 +32,9 @@ public class SpringEx1Application implements CommandLineRunner {
 	private static Scanner scanner = new Scanner(System.in);
 
 	private String login = null;
-	
+
 	private long idUser = 0;
-	
+
 	/*
 	 * Repositories Dependency Injections
 	 */
@@ -47,13 +49,17 @@ public class SpringEx1Application implements CommandLineRunner {
 	@Autowired
 	private OrderService orderService;
 //	@Autowired
+//	private PasswordEncoder passwordEncoder;
+//	@Autowired
 //	private OrderItemService orderItemService;
-	
-
-
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringEx1Application.class, args);
+	}
+	
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 
 	@Override
@@ -61,75 +67,65 @@ public class SpringEx1Application implements CommandLineRunner {
 		/*
 		 * 
 		 */
-		
-//		  Role adminRole = new Role(0, RoleEnum.ADMIN); Role userRole = new Role(0,
-//		  RoleEnum.USER); List<Role> adminRoles = new ArrayList<Role>(); List<Role>
-//		  userRoles = new ArrayList<Role>();; adminRoles.add(adminRole);
-//		  adminRoles.add(userRole); userRoles.add(userRole); roleService.saveRole(new
-//		  Role(0, RoleEnum.ADMIN)); roleService.saveRole(new Role(0, RoleEnum.USER));
-//		  userService.saveUser(new User(0, "belka@fms.com", "1234", true, null, null));
-//		  userService.saveUser(new User(0, "ilyas@fms.com", "1234", true, null, null));
-		 
+
+//		roleService.saveRole(new Rrole(0, "ADMIN"));
+//		roleService.saveRole(new Rrole(0, "USER"));
+//		userService.saveUser(new Uuser(0, "belkacem", "belka@fms.com", passwordEncoder.encode("1234"), true));
+//		userService.saveUser(new Uuser(0, "ilyas", "ilyas@fms.com", passwordEncoder.encode("1234"), true));
+//		userService.saveUser(new Uuser(0, "aksel", "aksel@fms.com", passwordEncoder.encode("1234"), true));
+
 //		
-		//System.out.println(userService.readById(1).getRoles().get(0).getRole());
-		//System.out.println(userService.findUserByEmailAndPassword("ilyas@fms.com", "1234").getRoles());
-		
+		// System.out.println(userService.readById(1).getRoles().get(0).getRole());
+		// System.out.println(userService.findUserByEmailAndPassword("ilyas@fms.com",
+		// "1234").getRoles());
+
 		/*
 		 * Save some categories
 		 */
-		
-		
-//		  Category pc = new Category("PC"); Category smartphone = new
-//		  Category("SMARTPHONE"); Category tablet = new Category("TABLET"); Category
-//		  hardware = new Category("HARDWARE"); Category other = new Category("OTHER");
-//		  categoryService.saveCategory(pc); categoryService.saveCategory(smartphone);
-//		  categoryService.saveCategory(tablet); categoryService.saveCategory(hardware);
-//		  categoryService.saveCategory(other);
-		 
-		 
+
+//		Category pc = new Category("PC");
+//		Category smartphone = new Category("SMARTPHONE");
+//		Category tablet = new Category("TABLET");
+//		Category hardware = new Category("HARDWARE");
+//		Category other = new Category("OTHER");
+//		categoryService.saveCategory(pc);
+//		categoryService.saveCategory(smartphone);
+//		categoryService.saveCategory(tablet);
+//		categoryService.saveCategory(hardware);
+//		categoryService.saveCategory(other);
 
 		/*
 		 * Save some Articles
 		 */
-		
-		
-//		  articleService.saveArticle(new Article(null, "S10", "Samsung", (double) 350,
-//		  smartphone)); 
-//		articleService.saveArticle(new Article(null, "S7", "Samsung",
-//		  300., smartphone)); articleService.saveArticle(new Article(null, "MI10",
-//		  "Xiomi", 250D, smartphone)); articleService.saveArticle(new Article(null,
-//		  "GalaxyTab", "Samsung", (double) 150, tablet));
-//		  articleService.saveArticle(new Article(null, "EliteBook 16G", "HP", (double)
-//		  1350, pc)); articleService.saveArticle(new Article(null, "Ipad", "Apple",
-//		  (double) 100, tablet)); articleService.saveArticle(new Article(null,
-//		  "Chargeur PC", "hp", (double) 80, hardware));
-//		  
-//		  articleService.saveArticle(new Article(null, "S11", "Samsung", (double) 350,
-//		  smartphone)); articleService.saveArticle(new Article(null, "S12", "Samsung",
-//		  300., smartphone)); articleService.saveArticle(new Article(null, "MI09",
-//		  "Xiomi", 250D, smartphone)); articleService.saveArticle(new Article(null,
-//		  "tab enfant", "Gulli", (double) 150, tablet)); articleService.saveArticle(new
-//		  Article(null, "EliteBook 16G", "HP", (double) 1350, pc));
-//		  articleService.saveArticle(new Article(null, "Ipad", "Apple", (double) 150,
-//		  tablet)); articleService.saveArticle(new Article(null, "casque ", "hp",
-//		  (double) 80, hardware)); articleService.saveArticle(new Article(null, "S11",
-//		  "Samsung", (double) 350, other)); articleService.saveArticle(new
-//		  Article(null, "S12", "Samsung", 300., other)); articleService.saveArticle(new
-//		  Article(null, "MI09", "Xiomi", 250D, other)); articleService.saveArticle(new
-//		  Article(null, "tab enfant", "Gulli", (double) 150, other));
-//		  articleService.saveArticle(new Article(null, "EliteBook 16G", "HP", (double)
-//		  1350, other)); articleService.saveArticle(new Article(null, "Ipad", "Apple",
-//		  (double) 100, other)); articleService.saveArticle(new Article(null,
-//		  "casque ", "hp", (double) 80, other));
-		 
-		 
+
+//		articleService.saveArticle(new Article(null, "S10", "Samsung", (double) 350, 1, smartphone));
+//		articleService.saveArticle(new Article(null, "S7", "Samsung", 300., 1, smartphone));
+//		articleService.saveArticle(new Article(null, "MI10", "Xiomi", 250D, 1, smartphone));
+//		articleService.saveArticle(new Article(null, "GalaxyTab", "Samsung", (double) 150, 1, tablet));
+//		articleService.saveArticle(new Article(null, "EliteBook 16G", "HP", (double) 1350, 1, pc));
+//		articleService.saveArticle(new Article(null, "Ipad", "Apple", (double) 100, 1, tablet));
+//		articleService.saveArticle(new Article(null, "Chargeur PC", "hp", (double) 80, 1, hardware));
+//
+//		articleService.saveArticle(new Article(null, "S11", "Samsung", (double) 350, 1, smartphone));
+//		articleService.saveArticle(new Article(null, "S12", "Samsung", 300., 1, smartphone));
+//		articleService.saveArticle(new Article(null, "MI09", "Xiomi", 250D, 1, smartphone));
+//		articleService.saveArticle(new Article(null, "tab enfant", "Gulli", (double) 150, 1, tablet));
+//		articleService.saveArticle(new Article(null, "EliteBook 16G", "HP", (double) 1350, 1, pc));
+//		articleService.saveArticle(new Article(null, "Ipad", "Apple", (double) 150, 1, tablet));
+//		articleService.saveArticle(new Article(null, "casque ", "hp", (double) 80, 1, hardware));
+//		articleService.saveArticle(new Article(null, "S11", "Samsung", (double) 350, 1, other));
+//		articleService.saveArticle(new Article(null, "S12", "Samsung", 300., 1, other));
+//		articleService.saveArticle(new Article(null, "MI09", "Xiomi", 250D, 1, other));
+//		articleService.saveArticle(new Article(null, "tab enfant", "Gulli", (double) 150, 1, other));
+//		articleService.saveArticle(new Article(null, "EliteBook 16G", "HP", (double) 1350, 1, other));
+//		articleService.saveArticle(new Article(null, "Ipad", "Apple", (double) 100, 1, other));
+//		articleService.saveArticle(new Article(null, "casque ", "hp", (double) 80, 1, other));
 
 //		while (true) {
 //			System.out.println("Bienvenue dans votre LIBRAIRIE. Voici la liste de nos livres ");
 //			welcomeMenu();
 //		}
-		
-		
+
 		/*
 		 * Some requests TEST
 		 */
@@ -195,26 +191,28 @@ public class SpringEx1Application implements CommandLineRunner {
 	}
 
 	private void authentication() {
-		if(login != null)	System.out.println("vous êtes déjà connecté");
+		if (login != null)
+			System.out.println("vous êtes déjà connecté");
 		else {
 			System.out.println("saisissez votre email : ");
 			String email = scanner.next();
 			System.out.println("saisissez votre password : ");
 			String pwd = scanner.next();
-			
-			User user = userService.findUserByEmailAndPassword(email, pwd);
+
+			Uuser user = userService.findUserByEmailAndPassword(email, pwd);
 			if (user != null) {
 				idUser = user.getUserId();
 				/*
 				 * Check user role
 				 */
 				for (int i = 0; i < user.getRoles().size(); i++) {
-					if (user.getRoles().get(i).getRole() == RoleEnum.ADMIN) 
+					if (user.getRoles().get(i).getRole() == "ADMIN")
 						adminMenu();
-					else usersMenu(idUser);
+					else
+						usersMenu(idUser);
 				}
-			}
-			else System.out.println("login ou password incorrect");
+			} else
+				System.out.println("login ou password incorrect");
 		}
 	}
 
@@ -236,13 +234,13 @@ public class SpringEx1Application implements CommandLineRunner {
 				switch (menuChoice) {
 				case 1:
 					authentication();
-					//adminMenu();
+					// adminMenu();
 					break;
 
 				case 2:
 					usersMenu(idUser);
 					break;
-					
+
 				case 3:
 					authentication();
 					break;
@@ -280,22 +278,21 @@ public class SpringEx1Application implements CommandLineRunner {
 
 				case 2:
 					showAllCategories(categoryService.readAllCategories());
-					Long idCategory =  getPositiveIntegerInput(scanner, "\nEntrez l'ID de la CATEGORY concernée!");
+					Long idCategory = getPositiveIntegerInput(scanner, "\nEntrez l'ID de la CATEGORY concernée!");
 					showArticles(articleService.readArticleByCatgoryId(idCategory));
 					break;
 
 				case 3:
 					showArticles(articleService.realAll());
-					Long idArticle = getPositiveIntegerInput(scanner,
-							"\nEntrez l'ID de l'article que vous souhaitez!");
+					Long idArticle = getPositiveIntegerInput(scanner, "\nEntrez l'ID de l'article que vous souhaitez!");
 					articleService.addArticleToCart(idArticle);
 					break;
 
 				case 4:
 					showMyCart(articleService.getMyCart());
-					Long idArticle1 =  getPositiveIntegerInput(scanner,
+					Long idArticle1 = getPositiveIntegerInput(scanner,
 							"\nEntrez l'ID de l'article que vous souhaitez RETIRER!");
-					//shopJob.removeArticleFromBucket(idArticle1);
+					// shopJob.removeArticleFromBucket(idArticle1);
 					break;
 
 				case 5:
@@ -304,12 +301,12 @@ public class SpringEx1Application implements CommandLineRunner {
 
 				case 6:
 					int orderId = (int) getPositiveIntegerInput(scanner, "\nEntrez l'ID de la commande concernée!");
-					//getInvoice(orderId);
+					// getInvoice(orderId);
 					break;
-					
+
 				case 7:
 					showArticlesPageByPage();
-					//getInvoice(orderId);
+					// getInvoice(orderId);
 					break;
 
 				case 0:
@@ -325,7 +322,7 @@ public class SpringEx1Application implements CommandLineRunner {
 		}
 
 	}
-	
+
 	/**
 	 * 
 	 * @param scanner2
@@ -376,27 +373,30 @@ public class SpringEx1Application implements CommandLineRunner {
 					/* each line in the bucket corresponds to an item in the order table */
 					for (Map.Entry<Long, Article> entry : myCart.entrySet()) {
 						/* get the price for each item */
-					//	double itemPrice = entry.getValue().getPrice() * entry.getValue().getQuantity();
+						// double itemPrice = entry.getValue().getPrice() *
+						// entry.getValue().getQuantity();
 						/* Start saving items */
-						//shopJob.insertOrderLine(new OrderLine(0, entry.getValue().getId(),
-							//	entry.getValue().getQuantity(), itemPrice, lastOrderId + 1, lastOrderId + 1));
+						// shopJob.insertOrderLine(new OrderLine(0, entry.getValue().getId(),
+						// entry.getValue().getQuantity(), itemPrice, lastOrderId + 1, lastOrderId +
+						// 1));
 						/* Get the order total price */
-						//totalprice += itemPrice;
+						// totalprice += itemPrice;
 					}
 
 					/*
 					 * Update the last default order saving after that all order items were saved
 					 * (and clear the bucket)
 					 */
-		//			shopJob.updateOrder(new Order(lastOrderId + 1, new Date(), totalprice, userId));
+					// shopJob.updateOrder(new Order(lastOrderId + 1, new Date(), totalprice,
+					// userId));
 					myCart.clear();
 
 					/**/
 					int getInvoice = getPositiveOneOrTwo(scanner,
 							"Voulez-vous récuperer votre facture:  ?(1:oui/ 2:non)");
 					if (getInvoice == 1)
-						//shopJob.generatetInvoice(lastOrderId + 1);
-					System.out.println("Merci et à bientôt.");
+						// shopJob.generatetInvoice(lastOrderId + 1);
+						System.out.println("Merci et à bientôt.");
 				}
 			}
 		}
@@ -439,7 +439,6 @@ public class SpringEx1Application implements CommandLineRunner {
 		System.out.println(
 				"----------------------------------------------------------------------------------------------------\n");
 
-		
 	}
 
 	private void adminMenu() {
@@ -457,8 +456,7 @@ public class SpringEx1Application implements CommandLineRunner {
 						+ "Tous les ARTICLES d’une CATEGORIE                      enter (6)\n"
 						+ "Pour AJOUTER un ARTICLE,                               enter (7)\n"
 						+ "Pour SUPPRIMER un article         ,                    enter (8)\n"
-						+ "Pour METTRE A JOUR un ARTICLE,                         enter (9)\n"
-						+ "\n"
+						+ "Pour METTRE A JOUR un ARTICLE,                         enter (9)\n" + "\n"
 						+ "SORTIR de l'application,                               enter (0)\n"
 						+ "----------------------------------------------------------------");
 
@@ -473,11 +471,11 @@ public class SpringEx1Application implements CommandLineRunner {
 				case 2:
 					addCategory();
 					break;
-					
+
 				case 3:
 					deleteCategory();
 					break;
-					
+
 				case 4:
 					showArticles(articleService.realAll());
 					break;
@@ -489,7 +487,7 @@ public class SpringEx1Application implements CommandLineRunner {
 				case 6:
 					articlesByCategoryId();
 					break;
-					
+
 				case 7:
 					addArticle();
 					break;
@@ -517,9 +515,10 @@ public class SpringEx1Application implements CommandLineRunner {
 
 	private void deleteCategory() {
 		showAllCategories(categoryService.readAllCategories());
-	int idCategory = (int) getPositiveIntegerInput(scanner, "\nEntrez l'ID de la categorie que vous souhaitez supprimer!");
+		int idCategory = (int) getPositiveIntegerInput(scanner,
+				"\nEntrez l'ID de la categorie que vous souhaitez supprimer!");
 		categoryService.deleteCategory(idCategory);
-		
+
 	}
 
 	private void addCategory() {
@@ -527,7 +526,7 @@ public class SpringEx1Application implements CommandLineRunner {
 		String category = scanner.nextLine();
 		category = scanner.nextLine();
 		categoryService.saveCategory(new Category(category));
-		
+
 	}
 
 	/**
@@ -586,7 +585,7 @@ public class SpringEx1Application implements CommandLineRunner {
 			catName = article.getCategory().getName();
 
 		articleService.saveArticle(
-				new Article((long) idArticle, description, brand, price, categoryService.getCategoryById(idCat)));
+				new Article((long) idArticle, description, brand, price, 1, categoryService.getCategoryById(idCat)));
 	}
 
 	private String yesOrNoChoice() {
@@ -642,7 +641,7 @@ public class SpringEx1Application implements CommandLineRunner {
 		System.out.println("Choisissez la categorie en tapant l'ID correspondant ?");
 		Long idCat = scanner.nextLong();
 		articleService
-				.saveArticle(new Article(null, description, brand, price, categoryService.getCategoryById(idCat)));
+				.saveArticle(new Article(null, description, brand, price, 1, categoryService.getCategoryById(idCat)));
 	}
 
 	private void deleteArticle() {
@@ -698,7 +697,7 @@ public class SpringEx1Application implements CommandLineRunner {
 					break;
 
 				case 2:
-					if (page < size-1) {
+					if (page < size - 1) {
 						clearPreviousPrintedPage(currentPageElts);
 						showArticles(articleService.readArticlesPageByPage(page + 1, size).getContent());
 						page++;
@@ -737,7 +736,7 @@ public class SpringEx1Application implements CommandLineRunner {
 	}
 
 	private void clearPreviousPrintedPage(int currentPageElts) {
-		for (int i = 0; i < (currentPageElts * 2) + 2; i++) 
+		for (int i = 0; i < (currentPageElts * 2) + 2; i++)
 			System.out.print(
 					"\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
 	}

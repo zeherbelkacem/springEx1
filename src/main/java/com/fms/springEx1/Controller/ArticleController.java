@@ -30,7 +30,7 @@ public class ArticleController {
 	@Autowired
 	private ICategoryService categoryService;
 
-	@RequestMapping("/shop")
+	@RequestMapping("/")
 	public String articleList(Model model, @RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "5") int size,
 			@RequestParam(name = "keyWord", defaultValue = "") String keyWord,
@@ -123,7 +123,7 @@ public class ArticleController {
 	 * @param modelMap
 	 * @return
 	 */
-	@RequestMapping("/articlesByCategory")
+	@RequestMapping("articlesByCategory")
 	public String articlesByCategory(Model model, @RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "5") int size,
 			@RequestParam(name = "catName", defaultValue = "") String catName,
@@ -153,10 +153,10 @@ public class ArticleController {
 		model.addAttribute("categories", categoryService.readAllCategories());
 //			model.addAttribute("keyWord", articles.getContent().get(0).getBrand());
 
-		return "shop";
+		return "articlesByCategory";
 	}
 
-	@RequestMapping("shop/cart")
+	@RequestMapping("cart")
 	public String articleList(Model model, @RequestParam(name = "idToRm", defaultValue = "") Long idToRm) {
 
 		if (idToRm != null)

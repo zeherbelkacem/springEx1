@@ -25,9 +25,13 @@ import lombok.NoArgsConstructor;
 @Data @AllArgsConstructor @NoArgsConstructor
 @Entity
 @Table(name = "USERS")
-public class User {
+public class Uuser {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long userId;
+	
+	@NotNull
+	@Column(name = "USER_NAME")
+	private String userName;
 	
 	@Column(name = "EMAIL")
 	@Email(regexp = ".+[@].+[\\.].+", message = "Please enter à valid mail")
@@ -36,10 +40,10 @@ public class User {
 	@NotNull
 	private String password;
 	
-	private Boolean enable;
+	private Boolean active;
 	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private List<Role> roles = new ArrayList<>();
+	private List<Rrole> roles = new ArrayList<>();
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Order> orders;
@@ -48,8 +52,21 @@ public class User {
 	
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", email=" + email + ", password=" + password + ", enable=" + enable
+		return "User [userId=" + userId + ", username=" + userName + ", email=" + email + ", password=" + password + ", enable=" + active
 				+"]";
+	}
+
+
+
+	public Uuser(long userId, @NotNull String userName,
+			@Email(regexp = ".+[@].+[\\.].+", message = "Please enter à valid mail") String email,
+			@NotNull String password, Boolean active) {
+		super();
+		this.userId = userId;
+		this.userName = userName;
+		this.email = email;
+		this.password = password;
+		this.active = active;
 	}
 
 

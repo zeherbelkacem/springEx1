@@ -6,8 +6,8 @@
 	<title>SHOP</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--	<link th:rel="stylesheet" th:href="@{webjars/font-awesome/5.15.4/css/all.css} " />-->
-	 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.css" rel="stylesheet" type="text/css" />
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.css" rel="stylesheet"
+		type="text/css" />
 	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.0.1/css/bootstrap.min.css} " />
 </head>
 
@@ -26,7 +26,7 @@
 					</div>
 					<div class="col-6">
 						<form class="form-inline input-group">
-							<input class="form-control mr-sm-2" name="catName" type="search" placeholder="Search"
+							<input class="form-control mr-sm-2" name="email" type="search" placeholder="Search"
 								aria-label="Search">
 							<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 						</form>
@@ -36,24 +36,42 @@
 					<thead>
 						<tr>
 							<th>ID</th>
-							<th>CATEGORIE NAME</th>
-							<th>DELETE</th>
-							<th>UPDATE</th>
+							<th>NAME</th>
+							<th>EMAIL</th>
+							<th>ACTIVE</th>
+							<th>ROLES</th>
+							<th>ORDERS</th>
+							<th>Delete</th>
+							<th>Edit</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="c:${listCategories}">
-							<td th:text="${c.id}">
+						<tr th:each="u:${listUsers}">
+							<td th:text="${u.userId}">
 								</th>
-							<td><a th:href="@{articlesByCategory(catName=${c.name })}" data-toggle="tooltip"
-									data-placement="top" title="See corresponding articles!"
-									class="text-decoration-none" th:text="${c.name}"></a></td>
+							<td "${u.userName}"></td>
+							<td th:text="${u.email}"></td>
+							<td th:text="${u.active}"></td>
+							<td> <select name="role" class="form-control">
+									<option th:each="r : ${u.roles}" th:text="${r.role}"></option>
+								</select></td>
+
+
+
+
 							<td>
-								<a th:href="@{categories(catId=${c.id })}" onclick="return confirm('Are you sure?')"><i class="fas fa-trash-alt"></i>       </a>
+								<a href="#" class="btn btn-success btn-block">Get orders</a>
 							</td>
+
 							<td>
-								<a th:href="@{categories/updateCategoryForm(id=${c.id})}"><i class="fas fa-edit"></i></a>
+								<a href="#" onclick="return confirm('Are you sure?')"><i class="fas fa-trash-alt"></i></a>
 							</td>
+
+
+							<td>
+								<a href="#" ><i class="fas fa-edit"></i></a>
+							</td>
+
 						</tr>
 					</tbody>
 				</table>
@@ -64,26 +82,26 @@
 
 							<li th:class="${currentPage==0 ? 'page-item disabled' : 'page-item'} ">
 								<a class="page-link"
-									th:href="@{categories(page=${currentPage-1}, size=${size}, catName=${catName} ) }">Previous</a>
+									th:href="@{users(page=${currentPage-1}, size=${size}, date=${email} ) }">Previous</a>
 							</li>
 
 							<li th:each="page,status:${pages}"><a
 									th:class="${status.index==currentPage?'btn btn-primary':'btn'  }"
-									th:href="@{ categories(page=${status.index}, size=${size}, catName=${catName}) }"
+									th:href="@{ users(page=${status.index}, size=${size}, date=${email}) }"
 									th:text="${status.index }"></a></li>
 
 							<li class="page-item"><a class="page-link"
-									th:href="@{ categories(page=${currentPage+1}, size=${size}, catName=${catName} )}">Next</a>
+									th:href="@{ users(page=${currentPage+1}, size=${size}, date=${email} )}">Next</a>
 							</li>
 							<li class="page-item"><a class="page-link"
-									th:href="@{categories(page=${totalPages-1}, size=${size}, catName=${catName} )}">Last</a>
+									th:href="@{users(page=${totalPages-1}, size=${size}, date=${email} )}">Last</a>
 
 							</li>
 						</ul>
 					</nav>
 				</div>
 				<div class="card-footer text-muted">
-					<a th:href="@{categories/saveCategoryForm}" class="btn btn-secondary btn-lg">Add new category</a>
+					<a th:href="@{admin/saveUserForm}" class="btn btn-secondary btn-lg">Add new user</a>
 				</div>
 
 				</section>

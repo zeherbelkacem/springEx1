@@ -112,19 +112,19 @@
 
 						<li th:class="${currentPage==0 ? 'page-item disabled' : 'page-item'} ">
 							<a class="page-link"
-								th:href="@{ shop(page=${currentPage-1}, size=${size}, keyWord=${keyWord} ) }">Previous</a>
+								th:href="@{ /(page=${currentPage-1}, size=${size}, keyWord=${keyWord} ) }">Previous</a>
 						</li>
 
 						<li th:each="page,status:${pages}"><a
 								th:class="${status.index==currentPage?'btn btn-primary':'btn'  }"
-								th:href="@{ shop(page=${status.index}, size=${size}, keyWord=${keyWord}) }"
+								th:href="@{ /(page=${status.index}, size=${size}, keyWord=${keyWord}) }"
 								th:text="${status.index }"></a></li>
 
 						<li class="page-item"><a class="page-link"
-								th:href="@{ shop(page=${currentPage+1}, size=${size}, keyWord=${keyWord} )}">Next</a>
+								th:href="@{ /(page=${currentPage+1}, size=${size}, keyWord=${keyWord} )}">Next</a>
 						</li>
 						<li class="page-item"><a class="page-link"
-								th:href="@{ shop(page=${totalPages-1}, size=${size}, keyWord=${keyWord} )}">Last</a>
+								th:href="@{ /(page=${totalPages-1}, size=${size}, keyWord=${keyWord} )}">Last</a>
 
 						</li>
 					</ul>

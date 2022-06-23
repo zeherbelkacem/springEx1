@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,19 +18,19 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor
-public class Role {
+@Table(name = "roles")
+public class Rrole {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long roleId;
 	
 	@Column(name = "ROLE")
-	@Enumerated(EnumType.STRING)
-	private RoleEnum role;
+//	@Enumerated(EnumType.STRING)
+	private String role;
 	
 	@ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
-	private List<User> users = new ArrayList<User>();
+	private List<Uuser> users = new ArrayList<Uuser>();
 
-	public Role(long id, RoleEnum role) {
-		super();
+	public Rrole(long id, String role) {
 		this.roleId = id;
 		this.role = role;
 	}
