@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fms.springEx1.Entities.Article;
+import com.fms.springEx1.Security.RoleService;
 import com.fms.springEx1.Security.UserService;
 import com.fms.springEx1.Security.Uuser;
 import com.fms.springEx1.Service.IArticleService;
@@ -28,6 +29,8 @@ public class SecurityController {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private RoleService roleService;
 	@Autowired
 	private IArticleService articleService;
 
@@ -47,17 +50,16 @@ public class SecurityController {
 //		//model.addAttribute("user", new User());
 //		return "redirect:/shop/orderResume";
 //	}
-	
+
 	@RequestMapping("/logout")
 	public String logoutForm(HttpServletRequest request) throws ServletException {
 		request.logout();
 		return "redirect:login";
 	}
-	
-	
+
 	@GetMapping("shop/orderResume")
 	public String orderResume(Model model) {
-		
+
 		long userId = userService.getUserId();
 		Uuser user = userService.readById(userId);
 //		System.out.println(userService.findUserByEmailAndPassword(user.getEmail(), user.getPassword()));
@@ -68,7 +70,6 @@ public class SecurityController {
 		model.addAttribute("date", new Date());
 		return "orderResume";
 	}
-	
 
 	@PostMapping("login/authenticate")
 	public String authenticate(@Valid Uuser user, BindingResult bindingResult, Model model) {
@@ -81,17 +82,16 @@ public class SecurityController {
 		}
 		return "redirect:/shop/orderResume";
 	}
-	
+
 	@RequestMapping("admin/users")
 	public String users(Model model, @RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "size", defaultValue = "5") int size,
 			@RequestParam(name = "email", defaultValue = "") String email,
 			@RequestParam(name = "userId", defaultValue = "") Long userId) {
 
-	
-		if (userId != null)
-			articleService.deleteArticleById(userId);
-
+		if (userId != null) {
+			userService.deleteById(userId);
+		}
 		Page<Uuser> users = userService.findByPageByPageAndEmail(email, PageRequest.of(page, size));
 		model.addAttribute("currentPage", page);
 		model.addAttribute("size", size);
@@ -102,11 +102,52 @@ public class SecurityController {
 		model.addAttribute("listOf", "List of users");
 		return "users";
 	}
-	
-	@RequestMapping("admin/saveUserForm")
+
+	@RequestMapping("admin/users/saveUserForm")
 	public String saveUser(Model model) {
+		model.addAttribute("roles", roleService.ReadAllRoles());
 		model.addAttribute("user", new Uuser());
+
 		return "saveNewUser";
 	}
+
+	@PostMapping("admin/users/saveUser")
+	public String saveUser(@Valid Uuser uuser, BindingResult bindingResult, @RequestParam(name = "userRole", defaultValue = "") String userRole,
+			@RequestParam(name = "adminRole", defaultValue = "") String adminRole, @RequestParam("active") String active, Model model) {
+		System.out.println(bindingResult.hasErrors());
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("user", uuser);
+			return "redirect:saveUserForm";
+		}
+		if (active.equalsIgnoreCase("true"))
+			uuser.setActive(true);
+		else
+			uuser.setActive(false);
+		if (!userRole.equals(""))
+			uuser.getRoles().add(roleService.getRoleByRoleName("USER"));
+		if (!adminRole.equals(""))
+			uuser.getRoles().add(roleService.getRoleByRoleName("ADMIN"));
+		userService.saveUuser(uuser);
+		return "redirect:/admin/users";
+	}
 	
+	@GetMapping("registerUser")
+	public String register(Model model) {
+		
+		model.addAttribute("user", new Uuser());
+		return "register";
+	}
+	@PostMapping("registration")
+	public String registration(@Valid Uuser uuser, BindingResult bindingResult, Model model) {
+		System.out.println(bindingResult.hasErrors());
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("user", uuser);
+			return "redirect:registerUser";
+		}
+			uuser.setActive(true);
+			uuser.getRoles().add(roleService.getRoleByRoleName("USER"));
+		userService.saveUuser(uuser);
+		return "redirect:/login";
+	}
+
 }

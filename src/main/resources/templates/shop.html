@@ -52,7 +52,7 @@
 								</li>
 								<li>
 									<a class="dropdown-item" sec:authorize="isAnonymous()"
-										th:href="@{register}">Register</a>
+										th:href="@{/registerUser}">Register</a>
 								</li>
 								<li>
 									<a class="dropdown-item" sec:authorize="isAuthenticated()"
@@ -257,7 +257,7 @@
 										</table>
 									</div>
 									<div class="card-footer text-muted">
-										<a th:href="@{shop/cart}" class="btn btn-secondary btn-block">See cart</a>
+										<a th:href="@{cart}" class="btn btn-secondary btn-block">See cart</a>
 									</div>
 								</div>
 							</section>

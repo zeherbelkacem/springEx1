@@ -12,6 +12,7 @@ public interface UserService {
 	public Uuser findUuserByUserName(String userName);
 	public Uuser findUserByEmailAndPassword(String email, String password);
 	public Uuser readById(long id);
+	public void deleteById(long id);
 	
 	/**
 	 * 

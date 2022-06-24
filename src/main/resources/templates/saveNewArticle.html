@@ -45,21 +45,19 @@
 					</div>
 					<div class="form-group mb-3">
 						<label class="control-label">Category</label>
-						<select name="catName" class="form-control mb-3">
+						<select name="catName" class="form-control  mb-3">
 							<div th:if="${article.getCategory() != null}">
 								<option th:each="c : ${categoriesName}" th:value="${c}" th:text="${c}"
 									th:selected="${c==article.getCategory().getName()}"></option>
 
 							</div>
-							<div th:if="${article.getCategory() == null}"> <!-- for save article in controller -->
+							<div th:if="${article.getCategory() == null}">
+								<!-- for save article in controller -->
 								<option th:each="c : ${category}" th:text="${c.name}"></option>
 							</div>
 
 						</select>
-
 					</div>
-
-
 
 					<button type="submit" class="btn btn-primary">Save</button>
 				</form>

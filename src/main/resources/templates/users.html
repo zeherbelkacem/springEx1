@@ -49,7 +49,7 @@
 						<tr th:each="u:${listUsers}">
 							<td th:text="${u.userId}">
 								</th>
-							<td "${u.userName}"></td>
+							<td th:text="${u.userName}"></td>
 							<td th:text="${u.email}"></td>
 							<td th:text="${u.active}"></td>
 							<td> <select name="role" class="form-control">
@@ -64,7 +64,7 @@
 							</td>
 
 							<td>
-								<a href="#" onclick="return confirm('Are you sure?')"><i class="fas fa-trash-alt"></i></a>
+								<a th:href="@{users(userId=${u.userId }, page=${currentPage}, size=${size})}" onclick="return confirm('Are you sure?')"><i class="fas fa-trash-alt"></i></a>
 							</td>
 
 
@@ -101,7 +101,7 @@
 					</nav>
 				</div>
 				<div class="card-footer text-muted">
-					<a th:href="@{admin/saveUserForm}" class="btn btn-secondary btn-lg">Add new user</a>
+					<a th:href="@{users/saveUserForm}" class="btn btn-secondary btn-lg">Add new user</a>
 				</div>
 
 				</section>
