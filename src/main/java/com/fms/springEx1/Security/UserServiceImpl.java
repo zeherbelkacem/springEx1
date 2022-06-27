@@ -22,24 +22,16 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Uuser saveUuser(Uuser user) {
-		String pwdEncoder = passwordEncoder.encode(user.getPassword());
 		
-		user.setPassword(pwdEncoder);
+		//Creation
+		if(userRepository.findById(user.getUserId()) == null) {
+			String pwdEncoder = passwordEncoder.encode(user.getPassword());
+			user.setPassword(pwdEncoder);
+			return userRepository.save(user);
+		}
+		
+		//Updating
 		return userRepository.save(user);
-	}
-
-	@Override
-	public Uuser findUuserByEmail(String email) {
-	return userRepository.findByEmail(email);
-	}
-
-	
-
-	@Override
-	public Uuser findUserByEmailAndPassword(String email, String password) {
-		Uuser user = userRepository.findByEmailAndPassword(email, password);
-		if(user != null) userId = user.getUserId();
-		return user;
 	}
 
 	@Override
@@ -58,8 +50,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Page<Uuser> findByPageByPageAndEmail(String email, Pageable pageable) {
-		return userRepository.findByEmailContains(email, pageable);
+	public Page<Uuser> findByPageByPageAndUserName(String username, Pageable pageable) {
+		return userRepository.findByUserNameContains(username, pageable);
 	}
 
 	@Override

@@ -60,6 +60,7 @@ public class AdminController {
 			articleService.deleteArticleById(id);
 
 		Page<Article> articles = articleService.findByPageByPageAndKeyWord(keyWord, PageRequest.of(page, size));
+		model.addAttribute("totalCartArticles", articleService.getMyCart().values().size());
 		model.addAttribute("currentPage", page);
 		model.addAttribute("size", size);
 		model.addAttribute("pages", new int[articles.getTotalPages()]);

@@ -41,7 +41,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 					GrantedAuthority grantedAuthority = new SimpleGrantedAuthority("ROLE_"+r.getRole());
 					grantedAuthorities.add(grantedAuthority);
 				});
-				return new User(uuser.getUserName(), uuser.getPassword(), grantedAuthorities);
+				return new User(uuser.getUserName(), uuser.getPassword(), uuser.getActive(), true, true, true, grantedAuthorities);
+//				return new User(uuser.getUserName(), uuser.getPassword(), grantedAuthorities);
 			}
 		});
 		
@@ -52,8 +53,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http.formLogin();
 		//http.authorizeHttpRequests().anyRequest().authenticated();
-		http.authorizeHttpRequests().antMatchers("/admin**/**").hasRole("ADMIN");
-		http.authorizeHttpRequests().antMatchers("shop**/**").permitAll();
+		http.authorizeHttpRequests().antMatchers("/admin/**/**").hasRole("ADMIN");
+		http.authorizeHttpRequests().antMatchers("/chooseCustomer/**/**").authenticated();
+		http.authorizeHttpRequests().antMatchers("/shop/**/**").permitAll();
+		http.csrf(); //
+		http.exceptionHandling().accessDeniedPage("/accessDenied");
 	}
 
 	

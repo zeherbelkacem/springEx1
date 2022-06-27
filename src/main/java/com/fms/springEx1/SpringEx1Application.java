@@ -199,7 +199,7 @@ public class SpringEx1Application implements CommandLineRunner {
 			System.out.println("saisissez votre password : ");
 			String pwd = scanner.next();
 
-			Uuser user = userService.findUserByEmailAndPassword(email, pwd);
+			Uuser user = userService.findUuserByUserName(email);
 			if (user != null) {
 				idUser = user.getUserId();
 				/*

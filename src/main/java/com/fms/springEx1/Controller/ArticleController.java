@@ -46,7 +46,6 @@ public class ArticleController {
 		Map<Long, Article> articlesCart = articleService.getMyCart();
 		model.addAttribute("totalPrice", articleService.getTotalSum());
 		model.addAttribute("totalCartArticles", articlesCart.values().size());
-		// System.out.println(articlesCart.values());
 		model.addAttribute("cartArticles", articlesCart.values());
 
 		/*
@@ -106,8 +105,8 @@ public class ArticleController {
 
 	@GetMapping("admin/updateArticleForm")
 	public String updateArticleForm(@RequestParam(name = "id", defaultValue = "") Long id, Model model) {
-		List<String>  CategoryNames = new ArrayList<String>();
-		for(Category c : categoryService.readAllCategories() ){
+		List<String> CategoryNames = new ArrayList<String>();
+		for (Category c : categoryService.readAllCategories()) {
 			CategoryNames.add(c.getName());
 		}
 		model.addAttribute("categoriesName", CategoryNames);
@@ -151,7 +150,7 @@ public class ArticleController {
 		model.addAttribute("listOf", "Articles of " + catName + " caterory");
 		model.addAttribute("listArticle", articles);
 		model.addAttribute("categories", categoryService.readAllCategories());
-//			model.addAttribute("keyWord", articles.getContent().get(0).getBrand());
+		model.addAttribute("catName", catName);
 
 		return "articlesByCategory";
 	}

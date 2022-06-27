@@ -25,6 +25,8 @@ public class OrderServiceImpl implements OrderService {
 	private IArticleService articleService;
 	@Autowired
 	private OrderItemService orderItemService;
+	@Autowired
+	private CustomerService customerService;
 
 	@Override
 	public long getLastOrderId() {
@@ -45,13 +47,13 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public Order saveOrder() {
+	public Order saveOrder(Long customerId) {
 		/*
 		 * As we can't add or update a child (orderitem) row (foreign key constraint,
 		 * start by save a default parent row (order)
 		 */
 		orderRepository.save(new Order(0, new Date(), articleService.getTotalSum(), null,
-				userService.readById(userService.getUserId())));
+				customerService.readById(customerId)));
 		long lastOrderId = getLastOrderId();
 
 		/* each line in the bucket corresponds to an item in the order table */
@@ -64,7 +66,7 @@ public class OrderServiceImpl implements OrderService {
 		 * (and clear the bucket)
 		 */
 		Order orderToSave = new Order(lastOrderId, new Date(), articleService.getTotalSum(), null,
-				userService.readById(userService.getUserId()));
+				customerService.readById(customerId));
 		articleService.getMyCart().clear();
 
 		return orderRepository.save(orderToSave);

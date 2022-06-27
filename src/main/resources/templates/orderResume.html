@@ -6,7 +6,10 @@
 	<title>SHOP</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.0.1/css/bootstrap.min.css} " />
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.css" rel="stylesheet"
+		type="text/css" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 
 </head>
@@ -26,7 +29,14 @@
 						<table class="table table-light table-striped table-hover">
 							<tbody>
 								<tr> Customer: </tr>
-								<tr th:text="${ user.email}"></tr>
+								<tr th:text="${ customer.firstName +' '}"></tr>
+								<tr th:text="${ customer.lastName}"></tr>
+								</br>
+								<tr> Address: </tr>
+								<tr th:text="${ customer.address}"></tr>
+								</br>
+								<tr> Address: </tr>
+								<tr th:text="${ customer.phone}"></tr>
 								</br>
 								<tr> Date: </tr>
 								<tr th:text="${ date}"></tr>
@@ -59,18 +69,11 @@
 									<td th:text="${ca.quantity}"></td>
 									<td th:text="${ca.price}"></td>
 									<td>
-										<a th:href="@{ /shop/cart(idToRm=${ca.id})}"
-											class="btn btn-danger btn-block"><svg xmlns="http://www.w3.org/2000/svg"
-												width="16" height="16" fill="currentColor" class="bi bi-trash"
-												viewBox="0 0 16 16">
-												<path
-													d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-												<path fill-rule="evenodd"
-													d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-											</svg></a>
+										<a th:href="@{ cart(idToRm=${ca.id})}"><i
+												class="fas fa-trash-alt"></i></a>
 									</td>
 								</tr>
-							</tbody>/
+							</tbody>
 							<tr class="bg-success">
 								<td>Total</td>
 								<td></td>
@@ -80,8 +83,11 @@
 						</table>
 					</div>
 					<div class="card-footer text-muted">
-						<a th:href="@{saveOrder}" onclick="return confirm('Are you sure?')"
-							class="btn btn-secondary btn-block">Order?</a>
+						<a th:href="@{saveOrder(customerId=${customer.id})}" onclick="return confirm('Are you sure?')"
+							class="btn btn-secondary btn-block">Order2</a>
+							
+							<a th:href="@{chooseCustomer}"
+							class="btn btn-secondary btn-block">Order1</a>
 					</div>
 				</div>
 
@@ -91,8 +97,8 @@
 
 
 
-
-		<script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+		<script src="https://code.jquery.com/jquery-3.6.0.js"
+			integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 		<script th:src="@{/webjars/popper.js/2.9.2/umd/popper.min.js}"></script>
 		<script th:src="@{/webjars/bootstrap/5.0.1/js/bootstrap.min.js}"></script>
 </body>

@@ -36,5 +36,5 @@ public class Order {
 	private List<OrderItem> orderItems;
 	
 	@ManyToOne
-	private Uuser user;
+	private Customer customer;
 }

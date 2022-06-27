@@ -19,26 +19,36 @@
 
 		<div class="card text-center">
 			<div class="card-header">
-				<h1>My Cart</h1>
+				<h1>Your different customers addresses</h1>
 			</div>
 
 			<div class="card-body">
 				<table class="table table-dark table-striped table-hover">
 					<thead>
 						<tr>
-							<th>DESCRIPTION</th>
-							<th>QUANTITY</th>
-							<th>PRICE</th>
-							<th>WITHDRAW</th>
+							<th>Fisrt Name</th>
+							<th>Last Name</th>
+							<th>Address</th>
+							<th>phone</th>
+							<th>Delete</th>
+							<th>Update</th>
+							<th>Choose this person</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="ca:${cartArticles}">
-							<td th:text="${ca.description}"></td>
-							<td th:text="${ca.quantity}"></td>
-							<td th:text="${ca.price}"></td>
+						<tr th:each="cu:${userCustomersList}">
+							<td th:text="${cu.firstName}"></td>
+							<td th:text="${cu.lastName}"></td>
+							<td th:text="${cu.address}"></td>
+							<td th:text="${cu.phone}"></td>
 							<td>
-								<a th:href="@{ /shop/cart(idToRm=${ca.id})}"><i class="fas fa-trash-alt"></i></a>
+								<a th:href="@{ chooseCustomer(id=${cu.id})}"><i class="fas fa-trash-alt"></i></a>
+							</td>
+							<td>
+								<a href=""><i class="fas fa-edit"></i></a>
+							</td>
+							<td>
+							<a th:href="@{orderResume(customerId=${cu.id})}" class="btn btn-success btn-block">select this address</a>
 							</td>
 						</tr>
 					</tbody>
@@ -51,8 +61,7 @@
 				</table>
 			</div>
 			<div class="card-footer text-muted">
-				<a th:href="@{chooseCustomer}" class="btn btn-secondary btn-block">Validate cart !!</a>
-				<a th:href="@{/}" class="btn btn-secondary btn-block">Continue shoping !!</a>
+				<a th:href="@{chooseCustomer(add=${'add'})}" class="btn btn-secondary btn-block">Add new person</a>
 			</div>
 		</div>
 
