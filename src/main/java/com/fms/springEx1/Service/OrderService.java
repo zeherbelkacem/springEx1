@@ -14,4 +14,6 @@ public interface OrderService {
 	public Order saveOrder(Long customerId);
 
 	public Page<Order> ordersPageByPage(Pageable pageable);
+	
+	public void loadInvoice(long orderId);
 }

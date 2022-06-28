@@ -139,10 +139,10 @@
 															</th>
 														<td th:text="${a.price}"></td>
 														<td>
-															<input type="number" value="1" min="1" max="10" />
+															<input type="number" name="quantity"  value="1"  min="1" max="10" />
 														</td>
 														<td>
-															<a th:href="@{ /(idToCart=${a.id})}"><i
+															<a th:href="@{ /(idToCart=${a.id}, page=${currentPage}, size=${size}, keyWord=${keyWord})}"><i
 																	class="fas fa-cart-plus"></i></a>
 
 														</td>
@@ -223,7 +223,7 @@
 													<td th:text="${ca.quantity}"></td>
 													<td th:text="${ca.price}"></td>
 													<td>
-														<a th:href="@{ shop(idToRm=${ca.id})}"><i
+														<a th:href="@{ /(idToRm=${ca.id}, page=${currentPage}, size=${size}, keyWord=${keyWord})}"><i
 																class="fas fa-trash-alt"></i></a>
 													</td>
 												</tr>

@@ -37,8 +37,8 @@ public class ArticleController {
 			@RequestParam(name = "catName", defaultValue = "") String catName,
 			@RequestParam(name = "idToCart", defaultValue = "") Long idToCart,
 			@RequestParam(name = "idToRm", defaultValue = "") Long idToRm,
-			@RequestParam(name = "quantity", defaultValue = "") String quantity) {
-
+			@RequestParam(name = "quantity", defaultValue = "1") int quantity) {
+			System.out.println("controller"+quantity);
 		if (idToCart != null)
 			articleService.addArticleToCart(idToCart);
 		if (idToRm != null)

@@ -35,6 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			
 			@Override
 			public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+				
 				Uuser uuser = userService.findUuserByUserName(username);
 				List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
 				uuser.getRoles().forEach(r->{
