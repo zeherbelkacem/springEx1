@@ -10,5 +10,9 @@ public interface CustomerService {
 
 	public Customer readByFirstName(String firstName);
 
+	public Customer readByPhone(String phone);
+
+	public void deleteCustomerById(Long custIdToRm);
+
 
 }

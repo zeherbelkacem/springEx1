@@ -18,15 +18,12 @@ import com.fms.springEx1.Entities.Article;
 import com.fms.springEx1.Entities.Order;
 import com.fms.springEx1.Entities.OrderItem;
 import com.fms.springEx1.Repository.OrderRepository;
-import com.fms.springEx1.Security.UserService;
 
 @Service
 public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private OrderRepository orderRepository;
-	@Autowired
-	private UserService userService;
 	@Autowired
 	private IArticleService articleService;
 	@Autowired
@@ -141,6 +138,12 @@ public class OrderServiceImpl implements OrderService {
 			e.printStackTrace();
 		}
 
+	}
+
+	@Override
+	public Order getOrderById(Long orderId) {
+		// TODO Auto-generated method stub
+		return orderRepository.findById(orderId).get();
 	}
 
 }

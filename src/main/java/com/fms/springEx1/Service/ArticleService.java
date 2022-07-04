@@ -3,8 +3,10 @@ package com.fms.springEx1.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Map.Entry;
+import java.util.Optional;
+
+import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,7 +15,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.fms.springEx1.Entities.Article;
-import com.fms.springEx1.Entities.CategoryEnum;
+import com.fms.springEx1.Exceptions.ErrorCode;
+import com.fms.springEx1.Exceptions.NotFoundEntityException;
 import com.fms.springEx1.Repository.ArticleRepository;
 
 @Service
@@ -33,7 +36,7 @@ public class ArticleService implements IArticleService {
 
 	@Override
 	public Article readById(Long id) {
-		return articleRepository.findById(id).get();
+		return articleRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Article not found using this id: "+id));
 	}
 
 	@Override
@@ -96,27 +99,29 @@ public class ArticleService implements IArticleService {
 
 	@Override
 	public Page<Article> findByPageByPageAndKeyWord(String keyWord, Pageable pageable) {
+		if(articleRepository.findByBrandContains(keyWord, pageable).isEmpty())
+			throw new NotFoundEntityException("Articles not found", ErrorCode.ARTICLES_NOT_FOUND_FOR_BRAND);
 		return articleRepository.findByBrandContains(keyWord, pageable);
 	}
 
 	@Override
-	public void addArticleToCart(Long idArticle) {
+	public void addArticleToCart(Long idArticle, int quantity) {
 		// gestion du panier daans metier
 
 		/** verifier l'existanec de l'ARTICLE ID */
 		Article article = articleRepository.findById(idArticle).get();
 
 		if (article != null) {
-			if (cartMap.containsKey(idArticle)) {// add the same product -> quantity incremented
-				int qt = getMyCart().get(idArticle).getQuantity() + 1;
-				article.setQuantity(qt);
+			//if (cartMap.containsKey(idArticle)) {// add the same product -> quantity incremented
+				//int qt = getMyCart().get(idArticle).getQuantity() + quantity;
+				article.setQuantity(quantity);
 				cartMap.put(article.getId(), article);
 
-			} else { // new product in the bucket (first time){
-				
-				article.setQuantity(1);
-				cartMap.put(article.getId(), article);
-			}
+//			} else { // new product in the bucket (first time){
+//				
+//				article.setQuantity(1);
+//				cartMap.put(article.getId(), article);
+//			}
 		}
 
 	}
@@ -146,15 +151,20 @@ public class ArticleService implements IArticleService {
 
 	@Override
 	public void removeArticleFromCart(Long idArticle) {
-		if (cartMap.get(idArticle).getQuantity() > 1)
-			cartMap.get(idArticle).setQuantity(cartMap.get(idArticle).getQuantity() - 1);
-		else
+//		if (cartMap.get(idArticle).getQuantity() > 1)
+//			cartMap.get(idArticle).setQuantity(cartMap.get(idArticle).getQuantity() - 1);
+//		else
 			cartMap.remove(idArticle);
 	}
 
 	@Override
 	public Page<Article> readByBrandContainsAndCategoryName(String keyWord, String catName, Pageable pageable) {
-		return articleRepository.findByBrandContainsAndCategoryName(keyWord, catName, pageable);
+		return articleRepository.readByBrandContainsAndCategoryName(keyWord, catName, pageable);
+	}
+
+	@Override
+	public Page<Article> readByDescriptionContainsAndCategoryName(String keyWord, String catName, Pageable pageable) {
+		return articleRepository.findByDescriptionContainsAndCategoryName( keyWord,  catName,  pageable);
 	}
 
 }

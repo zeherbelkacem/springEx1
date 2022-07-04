@@ -38,7 +38,7 @@
 							<td th:text="${ca.quantity}"></td>
 							<td th:text="${ca.price}"></td>
 							<td>
-								<a th:href="@{ /shop/cart(idToRm=${ca.id})}"><i class="fas fa-trash-alt"></i></a>
+								<a th:href="@{ cart(idToRm=${ca.id})}"><i class="fas fa-trash-alt"></i></a>
 							</td>
 						</tr>
 					</tbody>
@@ -50,9 +50,13 @@
 					</tr>
 				</table>
 			</div>
-			<div class="card-footer text-muted">
-				<a th:href="@{chooseCustomer}" class="btn btn-secondary btn-block">Validate cart !!</a>
-				<a th:href="@{/}" class="btn btn-secondary btn-block">Continue shoping !!</a>
+			<div class="card-footer text-muted d-flex justify-content-center">
+				<div class="col" th:if="${cartEmpty == null}">
+					<a th:href="@{myCustomers}" class="btn btn-secondary btn-block">Validate cart !!</a>
+				</div>
+				<div class="col">
+					<a th:href="@{/}" class="btn btn-secondary btn-block">Continue shoping !!</a>
+				</div>
 			</div>
 		</div>
 

@@ -1,15 +1,16 @@
 package com.fms.springEx1.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.fms.springEx1.Entities.Article;
 import com.fms.springEx1.Entities.Category;
-import com.fms.springEx1.Entities.CategoryEnum;
+import com.fms.springEx1.Exceptions.ErrorCode;
+import com.fms.springEx1.Exceptions.NotFoundEntityException;
 import com.fms.springEx1.Repository.CategoryRepository;
 
 @Service
@@ -18,6 +19,8 @@ public class CategoryServiceImp implements ICategoryService{
 	/*
 	 * Repositories Dependency Injections
 	 */
+	@Autowired
+	private ArticleService articleService;
 	@Autowired
 	private CategoryRepository categoryRepository;
 	
@@ -44,6 +47,9 @@ public class CategoryServiceImp implements ICategoryService{
 
 	@Override
 	public void deleteCategory(long id) {
+		if (!articleService.readArticleByCatgoryId(id).isEmpty()) {
+			throw new NotFoundEntityException("Articles in use, you can't delete this category", ErrorCode.ARTICLE_IN_USE);
+		}
 		categoryRepository.deleteById(id);
 		
 	}

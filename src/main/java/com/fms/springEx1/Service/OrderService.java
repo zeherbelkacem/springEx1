@@ -16,4 +16,6 @@ public interface OrderService {
 	public Page<Order> ordersPageByPage(Pageable pageable);
 	
 	public void loadInvoice(long orderId);
+
+	public Order getOrderById(Long orderId);
 }

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="shop">
+
+<head>
+	<title>SHOP</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--	<link th:rel="stylesheet" th:href="@{webjars/font-awesome/5.15.4/css/all.css} " />-->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.css" rel="stylesheet"
+		type="text/css" />
+	<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.0.1/css/bootstrap.min.css} " />
+</head>
+
+</head>
+
+<body>
+	<div class="mt-4" layout:fragment="cart">
+		<div class="card text-center">
+
+
+			<h3 th:text="${message}"></h3>
+			<h3 th:text="${code}"></h3>
+
+		</div>
+	</div>
+
+
+
+
+	<script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+	<script th:src="@{/webjars/popper.js/2.9.2/umd/popper.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/5.0.1/js/bootstrap.min.js}"></script>
+</body>
+
+</html>

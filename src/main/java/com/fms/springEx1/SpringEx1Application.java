@@ -3,6 +3,7 @@ package com.fms.springEx1;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,15 +11,21 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.fms.springEx1.Email.EmailService;
 import com.fms.springEx1.Entities.Article;
 import com.fms.springEx1.Entities.Category;
 import com.fms.springEx1.Entities.Order;
-import com.fms.springEx1.Security.RoleService;
+import com.fms.springEx1.Repository.OrderRepository;
 import com.fms.springEx1.Security.UserService;
 import com.fms.springEx1.Security.Uuser;
+import com.fms.springEx1.Service.CustomerService;
 import com.fms.springEx1.Service.IArticleService;
 import com.fms.springEx1.Service.ICategoryService;
 import com.fms.springEx1.Service.OrderService;
@@ -44,14 +51,20 @@ public class SpringEx1Application implements CommandLineRunner {
 	private ICategoryService categoryService;
 	@Autowired
 	private UserService userService;
-	@Autowired
-	private RoleService roleService;
+//	@Autowired
+//	private RoleService roleService;
 	@Autowired
 	private OrderService orderService;
 //	@Autowired
 //	private PasswordEncoder passwordEncoder;
 //	@Autowired
 //	private OrderItemService orderItemService;
+	@Autowired
+	private OrderRepository orderRepository;
+	@Autowired
+	private EmailService emailService;
+	@Autowired
+	private CustomerService customerService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringEx1Application.class, args);
@@ -62,15 +75,32 @@ public class SpringEx1Application implements CommandLineRunner {
 		return new BCryptPasswordEncoder();
 	}
 
+	@Bean
+	public JavaMailSender getJavaMailSender() {
+	    JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+	    mailSender.setHost("smtp.gmail.com");
+	    mailSender.setPort(587);
+	    
+	    mailSender.setUsername("my.gmail@gmail.com");
+	    mailSender.setPassword("password");
+	    
+	    Properties props = mailSender.getJavaMailProperties();
+	    props.put("mail.transport.protocol", "smtp");
+	    props.put("mail.smtp.auth", "true");
+	    props.put("mail.smtp.starttls.enable", "true");
+	    props.put("mail.debug", "true");
+	    
+	    return mailSender;
+	}
 	@Override
 	public void run(String... args) throws Exception {
+		
 		/*
 		 * 
 		 */
-
 //		roleService.saveRole(new Rrole(0, "ADMIN"));
 //		roleService.saveRole(new Rrole(0, "USER"));
-//		userService.saveUser(new Uuser(0, "belkacem", "belka@fms.com", passwordEncoder.encode("1234"), true));
+//		userService.saveUuser(new Uuser(0, "superAdmin", passwordEncoder.encode("1234"), true));
 //		userService.saveUser(new Uuser(0, "ilyas", "ilyas@fms.com", passwordEncoder.encode("1234"), true));
 //		userService.saveUser(new Uuser(0, "aksel", "aksel@fms.com", passwordEncoder.encode("1234"), true));
 
@@ -82,7 +112,6 @@ public class SpringEx1Application implements CommandLineRunner {
 		/*
 		 * Save some categories
 		 */
-
 //		Category pc = new Category("PC");
 //		Category smartphone = new Category("SMARTPHONE");
 //		Category tablet = new Category("TABLET");
@@ -285,7 +314,7 @@ public class SpringEx1Application implements CommandLineRunner {
 				case 3:
 					showArticles(articleService.realAll());
 					Long idArticle = getPositiveIntegerInput(scanner, "\nEntrez l'ID de l'article que vous souhaitez!");
-					articleService.addArticleToCart(idArticle);
+					articleService.addArticleToCart(idArticle, 1);
 					break;
 
 				case 4:

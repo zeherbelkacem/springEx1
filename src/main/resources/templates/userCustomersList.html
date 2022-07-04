@@ -30,8 +30,8 @@
 							<th>Last Name</th>
 							<th>Address</th>
 							<th>phone</th>
-							<th>Delete</th>
-							<th>Update</th>
+<!--							<th>Delete</th>-->
+<!--							<th>Update</th>-->
 							<th>Choose this person</th>
 						</tr>
 					</thead>
@@ -41,22 +41,24 @@
 							<td th:text="${cu.lastName}"></td>
 							<td th:text="${cu.address}"></td>
 							<td th:text="${cu.phone}"></td>
+<!--							<td>-->
+<!--								<a th:href="@{myCustomers(IdToRm=${cu.id})}"-->
+<!--									onclick="return confirm('Are you sure?')"><i class="fas fa-trash-alt"></i></a>-->
+<!--							</td>-->
+<!--							<td>-->
+<!--								<a th:href="@{updateCustomerForm(customerId=${cu.id})}"><i class="fas fa-edit"></i></a>-->
+<!--							</td>-->
 							<td>
-								<a th:href="@{ chooseCustomer(id=${cu.id})}"><i class="fas fa-trash-alt"></i></a>
-							</td>
-							<td>
-								<a href=""><i class="fas fa-edit"></i></a>
-							</td>
-							<td>
-							<a th:href="@{orderResume(customerId=${cu.id})}" class="btn btn-success btn-block">select this address</a>
+								<a th:href="@{orderResume(customerId=${cu.id})}"
+									class="btn btn-success btn-block">select this address</a>
 							</td>
 						</tr>
 					</tbody>
-					
+
 				</table>
 			</div>
 			<div class="card-footer text-muted">
-				<a th:href="@{chooseCustomer(add=${'add'})}" class="btn btn-secondary btn-block">Add new person</a>
+				<a th:href="@{saveNewCustomerForm}" class="btn btn-secondary btn-block">Add new person</a>
 			</div>
 		</div>
 

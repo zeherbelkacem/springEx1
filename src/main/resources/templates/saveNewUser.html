@@ -25,14 +25,14 @@
 
 						<div class="form-group mb-3">
 							<label class="control-label">UserName</label>
-							<input type="text" class="form-control" name="userName" th:value="${user.userName}">
-							<span th:error="${user.userName}" class="text-danger"></span>
+							<input type="text" class="form-control" name="userName" th:value="${uuser.userName}">
+							<span th:errors="${uuser.userName}" class="text-danger"></span>
 						</div>
 
 						<div class="form-group mb-3">
 							<label class="control-label">Password</label>
-							<input type="text" class="form-control" name="password" th:value="${user.password}">
-							<span th:errors="${user.password}" class="text-danger"></span>
+							<input type="password" class="form-control" name="password" th:value="${uuser.password}">
+							<span th:errors="${uuser.password}" class="text-danger"></span>
 						</div>
 
 						<div class="form-group mb-3 bg-warning">

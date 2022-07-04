@@ -5,13 +5,9 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.fms.springEx1.Entities.Article;
-import com.fms.springEx1.Entities.CategoryEnum;
 
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Long> {
@@ -52,6 +48,10 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 	 * @return
 	 */
 	public List<Article> findByCategoryId(Long id);
+
+	public Page<Article> readByBrandContainsAndCategoryName(String keyWord, String catName, Pageable pageable);
+
+	public Page<Article> findByDescriptionContainsAndCategoryName(String keyWord, String catName, Pageable pageable);
 	
 //	@Modifying
 //    @Query("UPDATE Article a SET a.description = :art.description, a.brand = :art.brand WHERE a.id = :aId")

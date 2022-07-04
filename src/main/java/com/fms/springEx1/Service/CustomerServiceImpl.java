@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 
 import com.fms.springEx1.Entities.Customer;
 import com.fms.springEx1.Repository.CustomerRepository;
-import com.fms.springEx1.Security.Uuser;
 
 @Service
 public class CustomerServiceImpl implements CustomerService{
@@ -29,6 +28,18 @@ public class CustomerServiceImpl implements CustomerService{
 	@Override
 	public Customer readByFirstName(String firstName) {
 		return customerRepository.findByFirstName(firstName);
+	}
+
+	@Override
+	public Customer readByPhone(String phone) {
+		return customerRepository.findByPhone(phone);
+	}
+
+	@Override
+	public void deleteCustomerById(Long custIdToRm) {
+		System.out.println("ggggggggggg"+custIdToRm);
+		customerRepository.deleteById(custIdToRm);
+		
 	}
 
 }

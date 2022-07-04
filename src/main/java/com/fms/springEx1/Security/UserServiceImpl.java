@@ -2,11 +2,12 @@ package com.fms.springEx1.Security;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.fms.springEx1.Exceptions.NotFoundEntityException;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -24,12 +25,14 @@ public class UserServiceImpl implements UserService {
 	public Uuser saveUuser(Uuser user) {
 		
 		//Creation
-		if(userRepository.findById(user.getUserId()) == null) {
+		if(userRepository.findById(user.getUserId()).isEmpty()) {
+			if (userRepository.findByUserName(user.getUserName()) != null) {
+				throw new NotFoundEntityException("User with the sme userName exists");
+			}
 			String pwdEncoder = passwordEncoder.encode(user.getPassword());
 			user.setPassword(pwdEncoder);
 			return userRepository.save(user);
 		}
-		
 		//Updating
 		return userRepository.save(user);
 	}

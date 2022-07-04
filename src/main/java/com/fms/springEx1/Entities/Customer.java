@@ -12,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import com.fms.springEx1.Security.Uuser;
 
@@ -32,16 +35,21 @@ public class Customer implements Serializable {
 	private long id;
 	
 	@Column
+	@NotNull(message = "Can't be null!")
+	@Size(min = 4, max = 25)
 	private String firstName;
 	
 	@Column
+	@NotNull(message = "Can't be null!")
+	@Size(min = 4, max = 25)
 	private String lastName;
 	
 	@Column
 	@Email(regexp = ".+[@].+[\\.].+", message = "Please enter à valid mail")
 	private String email;
 	
-	@Column
+	@Column(unique = true)
+	@Pattern(regexp = "^[0-9]{10}$", message = "Your number phone format is incorrect") //0000000000
 	private String phone;
 	
 	@Column

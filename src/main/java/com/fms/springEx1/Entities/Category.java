@@ -41,7 +41,7 @@ public class Category implements Serializable{
 //	private CategoryEnum name;
 	private String name;
 	
-	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "category")
 	private Collection<Article> articles;
 
 	/**

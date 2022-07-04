@@ -13,11 +13,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import com.fms.springEx1.Entities.Customer;
-import com.fms.springEx1.Entities.Order;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,11 +33,14 @@ public class Uuser {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long userId;
 
-	@NotNull
+	@NotNull(message = "Can't be null!")
+	@Size(min = 4, max = 25)
 	@Column(name = "USER_NAME")
 	private String userName;
 
 	@NotNull
+	@Size(min = 4)
+	//@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$", message = "The password must contain at least one lowercase character, one uppercase character, one digit, one special character, and a length between 8 to 20. The below regex uses positive lookahead for the conditional checking.")
 	private String password;
 
 	private Boolean active;

@@ -8,8 +8,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import com.fms.springEx1.Entities.Article;
-import com.fms.springEx1.Entities.Category;
-import com.fms.springEx1.Entities.CategoryEnum;
 
 public interface IArticleService {
 	
@@ -92,8 +90,9 @@ public interface IArticleService {
 	/**
 	 * 
 	 * @param idArticle
+	 * @param quantity 
 	 */
-	public void addArticleToCart(Long idArticle);
+	public void addArticleToCart(Long idArticle, int quantity);
 	
 	/**
 	 * 
@@ -116,5 +115,7 @@ public interface IArticleService {
 	 * @return
 	 */
 	public Page<Article> readByBrandContainsAndCategoryName(String keyWord, String catName, Pageable pageable);
+
+	public Page<Article> readByDescriptionContainsAndCategoryName(String keyWord, String catName, Pageable pageable);
 
 }
