@@ -2,65 +2,59 @@ package com.fms.springEx1.Repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import com.fms.springEx1.Entities.Article;
 
+@Repository
 public interface ArticleRepository extends JpaRepository<Article, Long> {
-	/**
-	 * Read articles by description key word
-	 * @param description
-	 * @return
-	 */
-	public List<Article> findByDescription(String description);
-	
-	/**
-	 * Read Article by part of key word
-	 * @param keyWord
-	 * @return
-	 */
-	public List<Article> findByDescriptionContains(String keyWord);
-	
-	/**
-	 * Read articles by description key word
-	 * @param brand
-	 * @return
-	 */
-	public List<Article> findByBrand(String brand);
-	
-	/**
-	 * Read Article by part of key word
-	 * @param keyWord
-	 * @return
-	 */
-	public List<Article> findByBrandContains(String keyWord);
 	
 	/**
 	 * 
-	 * @param brand
-	 * @param price
+	 * @param pageable
 	 * @return
 	 */
-	public Article findByBrandAndPrice(String brand, Double price);
+	public Page<Article> findByBrandContains(String keyWord, Pageable pageable);
 	
 	/**
-	 * find articles By Brand And Price Greater Than price 
-	 * @param brand
-	 * @param price
+	 * 
+	 * @param keyWord
+	 * @param pageable
 	 * @return
 	 */
-	public List<Article> findByBrandAndPriceGreaterThan(String brand, Double price);
+	public Page<Article> findByBrandContainsAndCategoryName(String keyWord, String catName, Pageable pageable);
 	
 	/**
-	 * Read articles with brand and price greater than y using HQL query
-	 * @param brand
-	 * @param price
+	 * 
+	 * @param keyWord
+	 * @param pageable
 	 * @return
 	 */
-	@Query("select A from Article A where A.brand like %:x% and A.price > :y")
-	public List<Article> findByBrandAndPriceMin(@Param("x") String brand, @Param("y")Double price);
+	public Page<Article> findByCategoryName(String keyWord, Pageable pageable);
 	
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public List<Article> findByCategoryName(String name);
+	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public List<Article> findByCategoryId(Long id);
+
+	public Page<Article> readByBrandContainsAndCategoryName(String keyWord, String catName, Pageable pageable);
+
+	public Page<Article> findByDescriptionContainsAndCategoryName(String keyWord, String catName, Pageable pageable);
+	
+//	@Modifying
+//    @Query("UPDATE Article a SET a.description = :art.description, a.brand = :art.brand WHERE a.id = :aId")
+//    Article updateArticleQ(@Param("art") Article art, @Param("aId") long aId);
 	
 }

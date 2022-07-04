@@ -1,12 +1,15 @@
 package com.fms.springEx1.Entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  * 
@@ -27,17 +30,19 @@ public class Category implements Serializable{
 	/*
 	 * Category name using String
 	 */
-	@Column(name = "NAME")
-	private String name;
+//	@Column(name = "NAME")
+//	private String name;
 	
 	/*
 	 * Category name using Enum
 	 */
-//	@Column(name = "CAT_NAME")
-//	private CategoryEnum catName;
+	@Column(name = "CAT_NAME")
+//	@Enumerated(EnumType.STRING)
+//	private CategoryEnum name;
+	private String name;
 	
-//	@OneToMany(mappedBy = "category")
-//	private Collection<Article> articles;
+	@OneToMany(mappedBy = "category")
+	private Collection<Article> articles;
 
 	/**
 	 * 

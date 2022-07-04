@@ -7,6 +7,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 
@@ -15,6 +24,7 @@ import javax.persistence.Id;
  */
 
 @Entity
+@Data @NoArgsConstructor @AllArgsConstructor
 public class Article implements Serializable {
 	/**
 	 * 
@@ -26,111 +36,42 @@ public class Article implements Serializable {
 	private Long id;
 
 	@Column(name = "DESCRIPTION")
+	@NotNull(message = "Can't be null!")
+	@Size(min = 10, max = 50)
 	private String description;
 
 	@Column(name = "BRAND")
+	@NotNull
 	private String brand;
 
 	@Column(name = "PRICE")
+	@NotNull
+	@DecimalMin("10")
 	private Double price;
 
-//	@ManyToOne
-//	@JoinColumn(name = "CATEGORY_ID")//It will have the same name by default
-//	private Category category;
+	@Column(name = "QUANTITY")
+	private int quantity;
 
+	@ManyToOne
+	@JoinColumn(name = "CATEGORY_ID") // It will have the same name by default
+	private Category category;
+
+//	@Transient
+//	@OneToOne(orphanRemoval = true, cascade = CascadeType.REMOVE, mappedBy = "article")
+//	private OrderItem orderItem;
+	
+	
+	
 	/**
 	 * 
 	 */
 	@Override
 	public String toString() {
-		return "Article [id=" + id + ", description=" + description + ", brand=" + brand + ", price=" + price + "]";
+		return "Article [id=" + id + ", description=" + description + ", brand=" + brand + ", price=" + price
+				+ ", category=" + category.getName() + "]";
 	}
 
-	/**
-	 * 
-	 */
-	public Article() {
-		super();
-	}
 
-	/**
-	 * 
-	 * @param id
-	 * @param description
-	 * @param brand
-	 * @param price
-	 */
-	public Article(Long id, String description, String brand, Double price) {
-		super();
-		this.id = id;
-		this.description = description;
-		this.brand = brand;
-		this.price = price;
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * 
-	 * @param id
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public String getDescription() {
-		return description;
-	}
-
-	/**
-	 * 
-	 * @param description
-	 */
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public String getBrand() {
-		return brand;
-	}
-
-	/**
-	 * 
-	 * @param brand
-	 */
-	public void setBrand(String brand) {
-		this.brand = brand;
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public Double getPrice() {
-		return price;
-	}
-
-	/**
-	 * 
-	 * @param price
-	 */
-	public void setPrice(Double price) {
-		this.price = price;
-	}
 
 	/**
 	 * 
@@ -139,5 +80,18 @@ public class Article implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+
+
+//	public Article(Long id, @NotNull(message = "Can't be null!") String description, String brand,
+//			@DecimalMin("10") Double price, int quantity, Category category) {
+//		super();
+//		this.id = id;
+//		this.description = description;
+//		this.brand = brand;
+//		this.price = price;
+//		this.quantity = quantity;
+//		this.category = category;
+//	}
 
 }
